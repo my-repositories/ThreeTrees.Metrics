@@ -1,0 +1,3 @@
+1.0 [2018-04-05]
+[+] Create basic projects
+[+] Add following deps: Autofac, NLog, StyleCop.Analyzers, EntityFramework Core.
