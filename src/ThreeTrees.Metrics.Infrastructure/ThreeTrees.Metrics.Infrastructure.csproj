@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\ThreeTrees.Metrics.Infrastructure.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.6.2" />
+    <PackageReference Include="NLog" Version="4.5.1" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ThreeTrees.Metrics.DataAccess\ThreeTrees.Metrics.DataAccess.csproj" />
+    <ProjectReference Include="..\ThreeTrees.Metrics.Domain\ThreeTrees.Metrics.Domain.csproj" />
+    <ProjectReference Include="..\ThreeTrees.Metrics.Services\ThreeTrees.Metrics.Services.csproj" />
+  </ItemGroup>
+
+</Project>
