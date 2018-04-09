@@ -1,7 +1,10 @@
+1.0.4 [2018-04-10]
+[+] Add Tools projects
+
 1.0.3 [2018-04-09]
 [+] Update docs: Add FinalTask.md and ProjectStructure.html
 [+] Add domain models: Add Employee and EmployeeStatistic
-[+] Create infrastructure and data access layer.
+[+] Create infrastructure and data access layer
 
 1.0.1 [2018-04-07]
 [*] Rename projects

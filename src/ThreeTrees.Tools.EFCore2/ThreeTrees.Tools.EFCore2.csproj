@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\ThreeTrees.Metrics.DataAccess.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netstandard2.0\ThreeTrees.Tools.EFCore2.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,14 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ThreeTrees.Metrics.Domain\ThreeTrees.Metrics.Domain.csproj" />
-    <ProjectReference Include="..\ThreeTrees.Tools.EFCore2\ThreeTrees.Tools.EFCore2.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.EntityFrameworkCore.SqlServer">
-      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.entityframeworkcore.sqlserver\2.0.2\lib\netstandard2.0\Microsoft.EntityFrameworkCore.SqlServer.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\ThreeTrees.Tools.Domain\ThreeTrees.Tools.Domain.csproj" />
   </ItemGroup>
 
 </Project>

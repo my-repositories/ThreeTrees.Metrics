@@ -1,94 +1,40 @@
 ﻿// Copyright (c) ThreeTrees. All rights reserved.
 // Licensed under the BSD license. See LICENSE file in the project root for full license information.
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Linq;
+
+using ThreeTrees.Metrics.Domain;
+using ThreeTrees.Metrics.Domain.Employees.Entities;
+using ThreeTrees.Tools.EFCore2;
 
 namespace ThreeTrees.Metrics.DataAccess
 {
-    /// <summary>
-    /// The app unit of work.
-    /// </summary>
-    public class AppUnitOfWork
+    /// <inheritdoc cref="IAppUnitOfWork" />
+    public class AppUnitOfWork : EfUnitOfWork<AppDbContext>, IAppUnitOfWork
     {
-        private AppDbContext context;
-
-        private bool disposed;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AppUnitOfWork"/> class.
-        /// </summary>
-        /// <param name="context">Database context.</param>
+        /// <inheritdoc />
         public AppUnitOfWork(AppDbContext context)
+            : base(context)
         {
-            this.context = context;
         }
+
+        /*public IUserRepository UserRepository => new UserRepository(Context);*/
 
         /// <summary>
-        /// The dispose.
+        /// Gets the employees.
         /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+        public IQueryable<Employee> Employees => Context.Employees;
 
-        /// <summary>
-        /// The save changes.
-        /// </summary>
-        /// <returns>
-        /// The <see cref="int"/>.
-        /// </returns>
-        public virtual int SaveChanges()
-        {
-            return context.SaveChanges();
-        }
+        /*public IProductRepository ProductRepository => new ProductRepository(Context);
 
-        /// <summary>
-        /// The save changes async.
-        /// </summary>
-        /// <returns>
-        /// The <see cref="Task"/>.
-        /// </returns>
-        public virtual Task<int> SaveChangesAsync()
-        {
-            return context.SaveChangesAsync();
-        }
+        public IQueryable<Product> Products => Context.Products;
 
-        /// <summary>
-        /// The save changes async.
-        /// </summary>
-        /// <param name="cancellationToken">
-        /// The cancellation token.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/>.
-        /// </returns>
-        public virtual Task<int> SaveChangesAsync(CancellationToken cancellationToken)
-        {
-            return context.SaveChangesAsync(cancellationToken);
-        }
+        public ICompanyRepository CompanyRepository => new CompanyRepository(Context);
 
-        /// <summary>
-        /// Dispose object.
-        /// </summary>
-        /// <param name="disposing">Dispose managed resources.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing)
-                {
-                    if (context != null)
-                    {
-                        context.Dispose();
-                        context = null;
-                    }
-                }
+        public IQueryable<Company> Companies => Context.Companies;
 
-                disposed = true;
-            }
-        }
+        public IProductPropertyRepository ProductPropertyRepository => new ProductPropertyRepository(Context);
+
+        public IQueryable<ProductProperty> ProductsProperties => Context.ProductProperties;*/
     }
 }
