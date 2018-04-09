@@ -1,5 +1,7 @@
-1.0.2 [2018-04-09]
+1.0.3 [2018-04-09]
 [+] Update docs: Add FinalTask.md and ProjectStructure.html
+[+] Add domain models: Add Employee and EmployeeStatistic
+[+] Create infrastructure and data access layer.
 
 1.0.1 [2018-04-07]
 [*] Rename projects
@@ -7,4 +9,4 @@
 
 1.0.0 [2018-04-05]
 [+] Create basic projects
-[+] Add following deps: Autofac, NLog, StyleCop.Analyzers, EntityFramework Core.
+[+] Add following deps: Autofac, NLog, StyleCop.Analyzers, EntityFramework Core

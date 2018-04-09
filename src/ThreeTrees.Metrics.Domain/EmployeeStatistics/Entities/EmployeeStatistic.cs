@@ -2,6 +2,9 @@
 // Licensed under the BSD license. See LICENSE file in the project root for full license information.
 
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+using ThreeTrees.Metrics.Domain.Employees.Entities;
 
 namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities
 {
@@ -22,7 +25,9 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities
         [Required]
         public int DrunkedCups { get; set; }
 
-        [Required]
+        [ForeignKey("Employee")]
+        public int EmployeeId { get; set; }
+
         public Employee Employee { get; set; }
 
         [Required]

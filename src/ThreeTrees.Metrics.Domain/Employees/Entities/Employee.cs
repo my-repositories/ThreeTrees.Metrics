@@ -4,13 +4,16 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities
+namespace ThreeTrees.Metrics.Domain.Employees.Entities
 {
+    /// <summary>
+    /// The employee branch.
+    /// </summary>
     public enum EmployeeBranch
     {
         Kazahstan,
         Russia,
-        USA,
+        Usa,
         Vietnam
     }
 
