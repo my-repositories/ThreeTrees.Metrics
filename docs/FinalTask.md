@@ -58,7 +58,7 @@ Other requirements:
 
 ## Technical Requirements
 
-1. The project must conform [general project structure](http://dotnetwiki.saritasa.io/development/ProjectStructure.html).
+1. The project must conform [general project structure](/docs/ProjectStructure.html).
 2. Use Saritasa.Tools project and CQS architecture.
 
 ## Step 1

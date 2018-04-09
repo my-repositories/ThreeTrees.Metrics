@@ -1,3 +1,6 @@
+1.0.2 [2018-04-09]
+[+] Update docs: Add FinalTask.md and ProjectStructure.html
+
 1.0.1 [2018-04-07]
 [*] Rename projects
 [*] Update rules in stylecop.json
