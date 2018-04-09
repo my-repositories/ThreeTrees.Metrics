@@ -1,0 +1,459 @@
+<header><nav id="autocollapse" class="navbar navbar ng-scope" role="navigation">
+<div class="container-fluid">
+<div class="navbar-header"><a class="navbar-brand" href="http://dotnetwiki.saritasa.io/index.html"><img id="logo" class="svg" src="http://dotnetwiki.saritasa.io/logo.png" alt="" /></a></div>
+<div id="navbar" class="collapse navbar-collapse">
+<ul class="nav level1 navbar-nav">
+<li><a title="General" href="http://dotnetwiki.saritasa.io/general/UsefulNetResources.html" name="general/toc.html">General</a></li>
+<li class="active"><a class="active" title="Development" href="http://dotnetwiki.saritasa.io/development/TeamManifest.html" name="development/toc.html">Development</a></li>
+<li><a title="Processes" href="http://dotnetwiki.saritasa.io/processes/CodeReview.html" name="processes/toc.html">Processes</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<div class="subnav navbar navbar-default">
+<div id="breadcrumb" class="container-fluid hide-when-search">
+<ul class="level1 breadcrumb">
+<li><a href="http://dotnetwiki.saritasa.io/development/TeamManifest.html">Development</a></li>
+<li><a href="http://dotnetwiki.saritasa.io/development/ProjectStructure.html">Project Structure</a></li>
+</ul>
+</div>
+</div>
+</header>
+<div class="container-fluid body-content hide-when-search" role="main">
+<div class="sidenav hide-when-search">
+<div id="sidetoggle" class="sidetoggle collapse">
+<div id="sidetoc">
+<div>
+<div class="sidefilter"><form class="toc-filter"><input id="toc_filter_input" type="text" placeholder="Enter here to filter..." /></form></div>
+<div class="sidetoc">
+<div id="toc" class="toc">
+<ul class="nav level1">
+<li><a title="Team Manifest" href="http://dotnetwiki.saritasa.io/development/TeamManifest.html" name="">Team Manifest</a></li>
+<li class="active in"><a class="active" title="Project Structure" href="http://dotnetwiki.saritasa.io/development/ProjectStructure.html" name="">Project Structure</a></li>
+<li><a title="Continuous Integration" href="http://dotnetwiki.saritasa.io/development/ContinuousIntegration.html" name="">Continuous Integration</a></li>
+<li><a title="Database Version Control" href="http://dotnetwiki.saritasa.io/development/DatabaseVersionControl.html" name="">Database Version Control</a></li>
+<li><a title="C# Style Guide" href="http://dotnetwiki.saritasa.io/development/CSStyleGuide.html" name="">C# Style Guide</a></li>
+<li><a title="JavaScript Style Guide" href="http://dotnetwiki.saritasa.io/development/JSStyleGuide.html" name="">Java<wbr />Script Style Guide</a></li>
+<li><a title="Git Style Guide" href="http://dotnetwiki.saritasa.io/development/GitStyleGuide.html" name="">Git Style Guide</a></li>
+<li><a title="SecurityPractices" href="http://dotnetwiki.saritasa.io/development/SecurityPractices.html" name="">Security<wbr />Practices</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="article row grid-right">
+<div class="col-md-10">
+<article id="_content" class="content wrap" data-uid="ProjectStructure">
+<h1 id="project-structure">Project Structure</h1>
+<h2 id="typical-project-structure">Typical Project Structure</h2>
+<p>The structure for typical project is based on popular github repositories:&nbsp;<a href="https://github.com/aspnet/Mvc">ASP.NET MVC</a>,&nbsp;<a href="https://github.com/NLog/NLog">NLog</a>,&nbsp;<a href="https://github.com/aspnet/EntityFramework">EntityFramework</a>.</p>
+<pre><code class="hljs applescript">.
+|<span class="hljs-comment">-- artifacts/</span>
+|<span class="hljs-comment">-- libs/</span>
+|<span class="hljs-comment">-- docs/</span>
+|<span class="hljs-comment">-- scripts/</span>
+|<span class="hljs-comment">-- src/</span>
+|<span class="hljs-comment">-- tests/</span>
+|<span class="hljs-comment">-- tools/</span>
+|<span class="hljs-comment">-- .gitignore</span>
+|<span class="hljs-comment">-- .gitattributes</span>
+|<span class="hljs-comment">-- CHANGELOG.txt</span>
+|<span class="hljs-comment">-- default.ps1</span>
+|<span class="hljs-comment">-- INSTALL.md</span>
+|<span class="hljs-comment">-- LICENSE.txt</span>
+|<span class="hljs-comment">-- README.md</span>
+L<span class="hljs-comment">-- TODO.txt</span>
+</code></pre>
+<ul>
+<li>artifacts - HTML pages, SQL scripts, other stuff.</li>
+<li>docs - Project documentation in Markdown or reStructuredText format.</li>
+<li>scripts - PSGallery scripts and any other additional scripts.</li>
+<li>src - Source code.</li>
+<li>tests - Project tests. This can be separate assembly within src directory or separate project in tests.</li>
+<li>tools - Any additional tools we need for project build like ILMerge.</li>
+<li>CHANGELOG.txt - Changelog that is supported between versions. Can be sent to whole team and customer.</li>
+<li>README.md - Info about the project, links to artifacts, google drive, postman, swagger, UI, specs, design files, etc.</li>
+<li>default.ps1 - PSake tasks.</li>
+<li>INSTALL.md - How to build, install, compile, publish (CI) project, how to do database migrations. This document should be enought for new developer to start working on project.</li>
+<li>LICENSE.txt - TBD</li>
+<li>TODO.txt - Any general to do items.</li>
+</ul>
+<p>The structure of src folder:</p>
+<pre><code class="hljs gherkin">.
+|<span class="hljs-string">-- ...
+</span>|<span class="hljs-string">-- src/
+</span>|   |<span class="hljs-string">-- Company.TestProject.Abstract/
+</span>|   |<span class="hljs-string">-- Company.TestProject.Cli/
+</span>|   |<span class="hljs-string">-- Company.TestProject.DataAccess/
+</span>|   |<span class="hljs-string">-- Company.TestProject.Domain/
+</span>|   |<span class="hljs-string">-- Company.TestProject.Infrastructure/
+</span>|   |<span class="hljs-string">-- Company.TestProject.IntegrationTests/
+</span>|   |<span class="hljs-string">-- Company.TestProject.Web/
+</span>|   |<span class="hljs-string">-- Company.TestProject.Shared/
+</span>|   |<span class="hljs-string">-- Company.TestProject.Services/
+</span>|   |<span class="hljs-string">-- Company.TestProject.Tests/
+</span>|<span class="hljs-string">   L-- Company.TestProject.sln
+L-- ...
+</span></code></pre>
+<ul>
+<li>Abstract - Optional assembly that should not reference any libraries or projects. Contains basic POCO classes used by application (commands, exceptions, DTOs, API requests and responses). This assembly can be shared to other applications.</li>
+<li>Cli - Command line interface. Various handlers can be here.</li>
+<li>DataAccess - Assembly that contains database access logic. There should be implementation for Unit of Work, Unit of Work Factory, Repositories related to EntityFramework, NHibernate, raw SQL. The assembly references ORM directly.</li>
+<li>Domain - Domain of application. Business logic goes here. See below.</li>
+<li>Infrastructure - Optional component. Shared infrastructure details: dependency injection container setup, web components, WPF components and other application level stuff related to backend. You can have more than one infrastructure assembly. Think about it like the place where you can keep shared components across web or WPF projects. For example in&nbsp;<code>Infrastructure.UI</code>&nbsp;assembly you can keep common used UI controls that are used in Manager and Client WPF applications. Another example is&nbsp;<code>Infrastructure.Mvc</code>&nbsp;contains route extensions, API response class, filters related to ASP.NET MVC used across all web projects.</li>
+<li>IntegrationTests - Integration tests.</li>
+<li>Web - ASP.NET MVC application. Controllers, JavaScript, Frontend templates.</li>
+<li>Shared - Helpers, extensions related to .NET go here. For example&nbsp;<code>IEnumerable</code>&nbsp;extensions or validation helpers. The project should not refer other projects.</li>
+<li>Services - Services that relates to 3th party dependencies. If you do not want to "pollute" domain with dependencies to other libraries move them to separate assembly. For example that can be&nbsp;<code>IEmailSender</code>&nbsp;in domain and&nbsp;<code>MailKitEmailSender</code>&nbsp;implementation in services.</li>
+<li>Tests - Unit tests.</li>
+</ul>
+<p>Structure of&nbsp;<code>Company.TestProject.Domain</code>:</p>
+<pre><code class="hljs gherkin">.
+|<span class="hljs-string">-- ...
+</span>|<span class="hljs-string">-- src/
+</span>|<span class="hljs-string">   L-- Company.TestProject.Domain/
+</span>|<span class="hljs-string">       L-- Users
+</span>|           |<span class="hljs-string">-- Abstract
+</span>|           |<span class="hljs-string">-- Commands
+</span>|           |<span class="hljs-string">-- Dtos
+</span>|           |<span class="hljs-string">-- Entities
+</span>|           |<span class="hljs-string">-- Events
+</span>|           |<span class="hljs-string">-- Exceptions
+</span>|           |<span class="hljs-string">-- Handlers
+</span>|           |<span class="hljs-string">-- Queries
+</span>|           |<span class="hljs-string">-- Repositories
+</span>|<span class="hljs-string">           L-- Services
+L- ...
+</span></code></pre>
+<p>In the root of domain there are bounded contexts. Bounded context is explicit boundaries in terms of application organization, logical data and processes separation. For example typical contexts may be&nbsp;<code>Users</code>,&nbsp;<code>Products</code>,&nbsp;<code>Sales</code>,&nbsp;<code>Support</code>,&nbsp;<code>System</code>. These contexts may refer to each other. Also the project contains interfaces for unit of work and unit of work factory.</p>
+<ul>
+<li>Abstract - Interfaces and abstract classes go here.</li>
+<li>Commands - POCO objects that describes processes within context. Commands should change application state (database CRUD). The commands just describe data that needs to implement action. For example&nbsp;<code>CreateUserCommand</code>,&nbsp;<code>UpdateProductCommand</code>,&nbsp;<code>ChangeUserPasswordCommand</code>,&nbsp;<code>SetLockoutPeriodCommand</code>. It is recommended to have&nbsp;<code>Command</code>&nbsp;suffix for every class. Actual operation is in Handlers namespace. Command should have one handler.</li>
+<li>Dtos - Data transfer objects. For example&nbsp;<code>UserBranchDto</code>,&nbsp;<code>InvoiceSummaryDto</code>. It is recommended to have&nbsp;<code>Dto</code>&nbsp;suffix for every class.</li>
+<li>Entities - Entites refer to the context. Usually they map to database tables. It is recommended to have data annotation attributes for fields. Every entity may have basic business logic refers to it.</li>
+<li>Events - POCO classes that contain data needs for firing events. Event describes that something has happened. It is recommened to have&nbsp;<code>Event</code>&nbsp;suffix for every class. For example when user has been created (<code>CreateUserCommand</code>) the&nbsp;<code>UserCreatedEvent</code>&nbsp;is generated with new user id. Event may have several handlers.</li>
+<li>Exceptions - Custom exceptions used within context. It should be domain exceptions (refer to&nbsp;<code>DomainException</code>&nbsp;in&nbsp;<code>Saritasa.Tools.Domain</code>).</li>
+<li>Handlers - Commands and events handlers. Actual code and data manipulation. Within each handler there should be separate unit of work instance.</li>
+<li>Queries - Common used queries. They use unit of work's database context to retrieve data from database. May be used to group LINQ queries that are used in separate places. May also contain some logic, may generate exceptions. For example&nbsp;<code>UsersQueries</code>,&nbsp;<code>UsersSummaryQueries</code>. It is recommended to have&nbsp;<code>Query</code>&nbsp;or&nbsp;<code>Queries</code>&nbsp;suffix for every class.</li>
+<li>Repositories - Contains interfaces for repositories.</li>
+<li>Services - Contains operations that are used by different commands, handlers. May be used to share business logic code.</li>
+</ul>
+<p>You may move Exceptions, Commands, Dtos, Events may be separated to another assembly (<code>Abstract</code>). Later the assembly can be used for better integration with another applications.</p>
+<p>Structure of&nbsp;<code>Company.TestProject.Web</code>&nbsp;project:</p>
+<pre><code class="hljs gherkin">.
+|<span class="hljs-string">-- ...
+</span>|<span class="hljs-string">-- Company.TestProject.Web/
+</span>|   |<span class="hljs-string">-- App_Data/
+</span>|   |<span class="hljs-string">-- App_Start/
+</span>|   |<span class="hljs-string">-- bower_components/
+</span>|   |<span class="hljs-string">-- Controllers/
+</span>|   |<span class="hljs-string">-- Core/
+</span>|   |<span class="hljs-string">-- Frontend/
+</span>|   |<span class="hljs-string">-- gulpfile.js/
+</span>|   |<span class="hljs-string">-- Models/
+</span>|   |<span class="hljs-string">-- node_modules/
+</span>|   |<span class="hljs-string">-- Static/
+</span>|   |   |<span class="hljs-string">-- bundles/
+</span>|   |   |<span class="hljs-string">-- fonts/
+</span>|   |   |<span class="hljs-string">-- img/
+</span>|   |<span class="hljs-string">   L-- ...
+</span>|   |<span class="hljs-string">-- Views/
+</span>|   |<span class="hljs-string">-- ...
+</span>|<span class="hljs-string">   L-- Company.TestProject.csproj
+L-- ...
+</span></code></pre>
+<ul>
+<li>Frontend - JavaScript, css, sass and templates. Frontend part of our web application.</li>
+<li>Static/bundles - Bundles part of frontend application. Assemblies from bower and npm, generated by Gulp, WebPack. Should not be included to git.</li>
+<li>Static - Assets, resources.</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<h3 id="web">Web</h3>
+<div class="table-responsive">
+<table class="table table-bordered table-striped table-condensed">
+<thead>
+<tr>
+<th>Project</th>
+<th>Interfaces &amp; Classes</th>
+<th>Project Type</th>
+<th>Packages</th>
+<th>Project References</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Domain</td>
+<td>ICustomerRepository, ICacheFactory, ICustomerService, CreateCustomerCommand, IPdfService, IPerfCounterService, CustomerHandlers</td>
+<td>.NET Standard 1.4</td>
+<td>System.ComponentModel.Annotations, Saritasa.Tools.Common, Saritasa.Tools.Domain</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>Services</td>
+<td>CustomerService, PdfService</td>
+<td>.NET Standard 1.4</td>
+<td>Spire.PDF</td>
+<td>Domain</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>DataAccess</td>
+<td>CustomerRepository</td>
+<td>.NET Standard 1.4</td>
+<td>Microsoft.EntityFramework.Core.* , Saritasa.Tools.EFCore1</td>
+<td>Domain</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>Infrastructure</td>
+<td>CacheFactory, PerfCounterService, MVC filters, MVC formatters</td>
+<td>.NET Core App / .NET Framework</td>
+<td>Microsoft.AspNetCore</td>
+<td>Domain, DataAccess, Services</td>
+<td>Configures DI, implements services for Business.</td>
+</tr>
+<tr>
+<td>Web</td>
+<td>Controllers, view models, views</td>
+<td>.NET Core App / .NET Framework</td>
+<td>Microsoft.AspNetCore</td>
+<td>Domain, Infrastructure</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="wpf">WPF</h3>
+<div class="table-responsive">
+<table class="table table-bordered table-striped table-condensed">
+<thead>
+<tr>
+<th>Project</th>
+<th>Interfaces &amp; Classes</th>
+<th>Project Type</th>
+<th>Packages</th>
+<th>Project References</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Domain</td>
+<td>ICustomerRepository, ICustomerService, INavigationService, IDialogService, CustomerHandlers</td>
+<td>.NET Standard 1.4</td>
+<td>System.ComponentModel.Annotations, Saritasa.Tools.Common, Saritasa.Tools.Domain</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>Services</td>
+<td>CustomerService</td>
+<td>.NET Standard 1.4</td>
+<td>&nbsp;</td>
+<td>Domain</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>DataAccess</td>
+<td>CustomerRepository</td>
+<td>.NET Standard 1.4</td>
+<td>Microsoft.EntityFramework.Core.*, Saritasa.Tools.EFCore1</td>
+<td>Domain</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>Infrastructure</td>
+<td>NavigationService, DialogService, XAML, view models</td>
+<td>.NET Framework</td>
+<td>GalaSoft.MvvmLight, PresentationFramework, WindowsBase</td>
+<td>Domain, DataAccess, Services</td>
+<td>Configures DI, implements services for Business.</td>
+</tr>
+<tr>
+<td>App</td>
+<td>XAML</td>
+<td>.NET Framework</td>
+<td>&nbsp;</td>
+<td>Domain, Services, Infrastructure</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="windows-service">Windows Service</h3>
+<div class="table-responsive">
+<table class="table table-bordered table-striped table-condensed">
+<thead>
+<tr>
+<th>Project</th>
+<th>Interfaces &amp; Classes</th>
+<th>Project Type</th>
+<th>Packages</th>
+<th>Project References</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Domain</td>
+<td>ICustomerRepository, ICustomerService, CreateCustomerCommand, ICacheFactory, IPdfService, IPerfCounterService, CustomerHandlers</td>
+<td>.NET Standard 1.4</td>
+<td>System.ComponentModel.Annotations, Saritasa.Tools.Common, Saritasa.Tools.Domain</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>Services</td>
+<td>CustomerService, PdfService</td>
+<td>.NET Standard 1.4</td>
+<td>Spire.PDF</td>
+<td>Domain</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>DataAccess</td>
+<td>CustomerRepository</td>
+<td>.NET Standard 1.4</td>
+<td>&nbsp;</td>
+<td>Domain</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>Infrastructure</td>
+<td>CacheFactory, PerfCounterService</td>
+<td>.NET Core App / .NET Framework</td>
+<td>Redis</td>
+<td>Domain, DataAccess, Services</td>
+<td>Configures DI, implements services for Business.</td>
+</tr>
+<tr>
+<td>App</td>
+<td>Service definition</td>
+<td>.NET Core App / .NET Framework</td>
+<td>Topshelf</td>
+<td>Domain, Infrastructure</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="infrastructure-project">Infrastructure Project</h3>
+<p>Infrastructure may be splitted to several layers. For example:</p>
+<div class="table-responsive">
+<table class="table table-bordered table-striped table-condensed">
+<thead>
+<tr>
+<th>Project</th>
+<th>Interfaces &amp; Classes</th>
+<th>Project Type</th>
+<th>Packages</th>
+<th>Project References</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Infrastructure</td>
+<td>PerfCounterService, PdfService</td>
+<td>.NET Core App / .NET Framework</td>
+<td>Spire.PDF</td>
+<td>Domain, DataAccess, Services</td>
+<td>Configures DI, implements services for Business.</td>
+</tr>
+<tr>
+<td>Infrastructure.Web</td>
+<td>HttpCacheFactory, MVC filters, MVC formatters</td>
+<td>.NET Core App / .NET Framework</td>
+<td>Microsoft.AspNetCore</td>
+<td>Domain, Services</td>
+<td>Configures DI, implements services for Business.</td>
+</tr>
+<tr>
+<td>Infrastructure.Desktop</td>
+<td>RedisCacheFactory</td>
+<td>.NET Core App / .NET Framework</td>
+<td>Redis</td>
+<td>Domain, Services</td>
+<td>Configures DI, implements services for Business.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="sample-changelog-document-structure">Sample Changelog Document Structure</h2>
+<p>There are few items we use to show the change:</p>
+<ul>
+<li><code>[*]</code>&nbsp;- Something has been changed/fixed/logic update.</li>
+<li><code>[-]</code>&nbsp;- Feature has been removed.</li>
+<li><code>[+]</code>&nbsp;- New feature.</li>
+</ul>
+<pre><code class="hljs stylus"><span class="hljs-number">15.0</span> [<span class="hljs-number">2017</span>-<span class="hljs-number">06</span>-<span class="hljs-number">12</span>]
+[+] Planner: update design, bugfix and optimizations.
+[*] Secure chat update (<span class="hljs-hexcolor">#898</span>57).
+[*] Planner: fix data inconsistency error when use <span class="hljs-string">"assign resource batch"</span> feature (<span class="hljs-hexcolor">#109468</span>, <span class="hljs-hexcolor">#109414</span>, <span class="hljs-hexcolor">#109056</span>).
+[+] Update format of project status report (<span class="hljs-hexcolor">#108093</span>).
+[+] Add sum of jobs to daily report (<span class="hljs-hexcolor">#106344</span>).
+[+] Show JIRA <span class="hljs-attribute">icon</span> on project list <span class="hljs-keyword">if</span> project is managed <span class="hljs-keyword">in</span> JIRA (<span class="hljs-hexcolor">#910</span>59).
+[*] Apostrophe bug fix when search project (<span class="hljs-hexcolor">#108619</span>).
+</code></pre>
+<h2 id="faq">FAQ</h2>
+<p><strong>Q:</strong>&nbsp;May domain project reference ORM library?&nbsp;<strong>A:</strong>&nbsp;The basic idea behind&nbsp;<code>IUnitOfWork</code>,&nbsp;<code>IUnitOfWorkFactory</code>&nbsp;is to cleanly separate business logic from ORM and any data storage. But in that way we are limited by only set of abstraction that are provided by repository and unit of work. For example we cannot use specific ORM features like async queries. So that on most cases it is possible to reference ORM to use these features. All raw SQL queries should be in repositories.</p>
+<p><strong>Q:</strong>&nbsp;Why do we need separate commands and handlers?&nbsp;<strong>A:</strong>&nbsp;First of all the abstraction allows to replace handler and provides much clean infrastructure. Also if&nbsp;<code>Saritasa.Tools.Messages</code>&nbsp;is used you can use these commands as JSON later for integration tests, enchanced logging, better debug.</p>
+<p><strong>Q:</strong>&nbsp;This is very similar to CQRS approach.&nbsp;<strong>A:</strong>&nbsp;Yes, but we do not strogly follow it. For example command can do read queries and return data within it, event sourcing is not used by default.</p>
+<h2 id="links">Links</h2>
+<ul>
+<li>
+<p><a href="http://blog.thedigitalgroup.com/chetanv/2015/07/06/understanding-onion-architecture/">Understanding Onion Architecture</a></p>
+<blockquote>
+<p>Only the infrastructure layer knows about the database and data access technology (Entity framework or ADO.NET) and other layers don't know anything about from where the data comes and how it is being stored.</p>
+<p>The basic principle of Onion Architecture is to follow the boundaries of these layers &ndash; the inner layer cannot depend on its outer layer but can depend on layers beneath.</p>
+</blockquote>
+</li>
+</ul>
+</article>
+</div>
+<div class="hidden-sm col-md-2" role="complementary">
+<div class="sideaffix"><nav id="affix" class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix">
+<div><label class="theme_controls theme_selector_label" for="theme_selector">Theme</label><select id="theme_selector" class="theme_controls">
+<option value="">Light</option>
+<option value="theme_night">Dark</option>
+</select></div>
+<h5 class="title">IN THIS ARTICLE</h5>
+<ul class="level1 nav bs-docs-sidenav">
+<li><a href="http://dotnetwiki.saritasa.io/development/ProjectStructure.html#typical-project-structure">Typical Project Structure</a></li>
+<li><a href="http://dotnetwiki.saritasa.io/development/ProjectStructure.html#examples">Examples</a></li>
+<li><a href="http://dotnetwiki.saritasa.io/development/ProjectStructure.html#sample-changelog-document-structure">Sample Changelog Document Structure</a></li>
+<li><a href="http://dotnetwiki.saritasa.io/development/ProjectStructure.html#faq">FAQ</a></li>
+<li><a href="http://dotnetwiki.saritasa.io/development/ProjectStructure.html#links">Links</a></li>
+</ul>
+</nav></div>
+</div>
+</div>
+</div>
