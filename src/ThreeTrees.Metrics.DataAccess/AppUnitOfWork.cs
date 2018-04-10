@@ -3,8 +3,10 @@
 
 using System.Linq;
 
+using ThreeTrees.Metrics.DataAccess.Repositories;
 using ThreeTrees.Metrics.Domain;
 using ThreeTrees.Metrics.Domain.Employees.Entities;
+using ThreeTrees.Metrics.Domain.Employees.Repositories;
 using ThreeTrees.Tools.EFCore2;
 
 namespace ThreeTrees.Metrics.DataAccess
@@ -12,13 +14,28 @@ namespace ThreeTrees.Metrics.DataAccess
     /// <inheritdoc cref="IAppUnitOfWork" />
     public class AppUnitOfWork : EfUnitOfWork<AppDbContext>, IAppUnitOfWork
     {
+        private IEmployeeRepository employeeRepository;
+
         /// <inheritdoc />
         public AppUnitOfWork(AppDbContext context)
             : base(context)
         {
         }
 
-        /*public IUserRepository UserRepository => new UserRepository(Context);*/
+        /// <inheritdoc/>
+        public IEmployeeRepository EmployeeRepository
+        {
+            get
+            {
+
+                if (employeeRepository == null)
+                {
+                    employeeRepository = new EmployeeRepository(Context);
+                }
+
+                return employeeRepository;
+            }
+        }
 
         /// <summary>
         /// Gets the employees.

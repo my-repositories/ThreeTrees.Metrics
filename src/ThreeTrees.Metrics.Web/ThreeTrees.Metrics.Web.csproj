@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="appsettings.default.json" />
+    <Content Remove="appsettings.Development.default.json" />
     <Content Remove="stylecop.json" />
   </ItemGroup>
 

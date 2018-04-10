@@ -1,5 +1,7 @@
-1.0.4 [2018-04-10]
+1.0.5 [2018-04-10]
 [+] Add Tools projects
+[*] Update appsettings for Web project
+[*] Update README.md
 
 1.0.3 [2018-04-09]
 [+] Update docs: Add FinalTask.md and ProjectStructure.html
