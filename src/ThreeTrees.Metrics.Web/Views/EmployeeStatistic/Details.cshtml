@@ -1,0 +1,60 @@
+﻿@model ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities.EmployeeStatistic
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EmployeeStatistic</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BilledHours)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BilledHours)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CompletedTasks)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CompletedTasks)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DrunkedCups)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DrunkedCups)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PlayedMCGames)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PlayedMCGames)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Month)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Month)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Year)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Year)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Employee.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

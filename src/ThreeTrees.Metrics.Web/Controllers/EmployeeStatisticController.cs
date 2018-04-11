@@ -1,40 +1,42 @@
 ﻿// Copyright (c) ThreeTrees. All rights reserved.
 // Licensed under the BSD license. See LICENSE file in the project root for full license information.
 
+using System.Linq;
 using System.Threading.Tasks;
-
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ThreeTrees.Metrics.DataAccess;
-using ThreeTrees.Metrics.Domain.Employees.Entities;
+using ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities;
 
 namespace ThreeTrees.Metrics.Web.Controllers
 {
     /// <inheritdoc />
-    public class EmployeeController : Controller
+    public class EmployeeStatisticController : Controller
     {
         private readonly AppDbContext context;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EmployeeController"/> class.
+        /// Initializes a new instance of the <see cref="EmployeeStatisticController"/> class.
         /// </summary>
         /// <param name="context">AppDb context.</param>
-        public EmployeeController(AppDbContext context)
+        public EmployeeStatisticController(AppDbContext context)
         {
             this.context = context;
         }
 
         /// <summary>
-        /// GET: Employee
+        /// GET: EmployeeStatistic
         /// </summary>
         /// <returns>The action result.</returns>
         public async Task<IActionResult> Index()
         {
-            return this.View(await this.context.Employees.ToListAsync());
+            var appDbContext = this.context.EmployeeStatistics.Include(e => e.Employee);
+            return this.View(await appDbContext.ToListAsync());
         }
 
         /// <summary>
-        /// GET: Employee/Details/5
+        /// GET: EmployeeStatistic/Details/5
         /// </summary>
         /// <param name="id">The id.</param>
         /// <returns>The action result.</returns>
@@ -45,46 +47,49 @@ namespace ThreeTrees.Metrics.Web.Controllers
                 return this.NotFound();
             }
 
-            var employee = await this.context.Employees
+            var employeeStatistic = await this.context.EmployeeStatistics
+                .Include(e => e.Employee)
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            if (employeeStatistic == null)
             {
                 return this.NotFound();
             }
 
-            return this.View(employee);
+            return this.View(employeeStatistic);
         }
 
         /// <summary>
-        /// GET: Employee/Create
+        /// GET: EmployeeStatistic/Create
         /// </summary>
         /// <returns>The action result.</returns>
         public IActionResult Create()
         {
+            this.ViewData["EmployeeId"] = new SelectList(this.context.Employees, "Id", "Name");
             return this.View();
         }
 
         /// <summary>
-        /// POST: Employee/Create
+        /// POST: EmployeeStatistic/Create
         /// </summary>
-        /// <param name="employee">The employee.</param>
+        /// <param name="employeeStatistic">The employee statistic.</param>
         /// <returns>The action result.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Employee employee)
+        public async Task<IActionResult> Create(EmployeeStatistic employeeStatistic)
         {
             if (this.ModelState.IsValid)
             {
-                this.context.Add(employee);
+                this.context.Add(employeeStatistic);
                 await this.context.SaveChangesAsync();
                 return this.RedirectToAction(nameof(this.Index));
             }
 
-            return this.View(employee);
+            this.ViewData["EmployeeId"] = new SelectList(this.context.Employees, "Id", "Name", employeeStatistic.EmployeeId);
+            return this.View(employeeStatistic);
         }
 
         /// <summary>
-        /// GET: Employee/Edit/5
+        /// GET: EmployeeStatistic/Edit/5
         /// </summary>
         /// <param name="id">The id.</param>
         /// <returns>The action result.</returns>
@@ -95,38 +100,40 @@ namespace ThreeTrees.Metrics.Web.Controllers
                 return this.NotFound();
             }
 
-            var employee = await this.context.Employees.SingleOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            var employeeStatistic = await this.context.EmployeeStatistics.SingleOrDefaultAsync(m => m.Id == id);
+            if (employeeStatistic == null)
             {
                 return this.NotFound();
             }
 
-            return this.View(employee);
+            this.ViewData["EmployeeId"] = new SelectList(this.context.Employees, "Id", "Name", employeeStatistic.EmployeeId);
+            return this.View(employeeStatistic);
         }
 
         /// <summary>
-        /// POST: Employee/Edit/5
+        /// POST: EmployeeStatistic/Edit/5
         /// </summary>
         /// <param name="id">The id.</param>
-        /// <param name="employee">The employee.</param>
+        /// <param name="employeeStatistic">The employee statistic.</param>
         /// <returns>The action result.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Employee employee)
+        public async Task<IActionResult> Edit(int id, EmployeeStatistic employeeStatistic)
         {
-            if (id != employee.Id)
+            if (id != employeeStatistic.Id)
             {
                 return this.NotFound();
             }
 
             if (this.ModelState.IsValid)
             {
-                this.context.Update(employee);
+                this.context.Update(employeeStatistic);
                 await this.context.SaveChangesAsync();
                 return this.RedirectToAction(nameof(this.Index));
             }
 
-            return this.View(employee);
+            this.ViewData["EmployeeId"] = new SelectList(this.context.Employees, "Id", "Name", employeeStatistic.EmployeeId);
+            return this.View(employeeStatistic);
         }
 
         /// <summary>
@@ -141,14 +148,15 @@ namespace ThreeTrees.Metrics.Web.Controllers
                 return this.NotFound();
             }
 
-            var employee = await this.context.Employees
+            var employeeStatistic = await this.context.EmployeeStatistics
+                .Include(e => e.Employee)
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            if (employeeStatistic == null)
             {
                 return this.NotFound();
             }
 
-            return this.View(employee);
+            return this.View(employeeStatistic);
         }
 
         /// <summary>
@@ -161,10 +169,15 @@ namespace ThreeTrees.Metrics.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var employee = await this.context.Employees.SingleOrDefaultAsync(m => m.Id == id);
-            this.context.Employees.Remove(employee);
+            var employeeStatistic = await this.context.EmployeeStatistics.SingleOrDefaultAsync(m => m.Id == id);
+            this.context.EmployeeStatistics.Remove(employeeStatistic);
             await this.context.SaveChangesAsync();
             return this.RedirectToAction(nameof(this.Index));
+        }
+
+        private bool EmployeeStatisticExists(int id)
+        {
+            return this.context.EmployeeStatistics.Any(e => e.Id == id);
         }
     }
 }

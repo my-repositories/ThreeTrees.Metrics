@@ -5,6 +5,8 @@ using System.Linq;
 
 using ThreeTrees.Metrics.Domain.Employees.Entities;
 using ThreeTrees.Metrics.Domain.Employees.Repositories;
+using ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities;
+using ThreeTrees.Metrics.Domain.EmployeeStatistics.Repositories;
 using ThreeTrees.Tools.Domain;
 
 namespace ThreeTrees.Metrics.Domain
@@ -22,16 +24,14 @@ namespace ThreeTrees.Metrics.Domain
         /// </summary>
         IQueryable<Employee> Employees { get; }
 
-        /* IProductRepository ProductRepository { get; }
+        /// <summary>
+        /// Gets the employee statistic repository.
+        /// </summary>
+        IEmployeeStatisticRepository EmployeeStatisticRepository { get; }
 
-        IQueryable<Product> Products { get; }
-
-        ICompanyRepository CompanyRepository { get; }
-
-        IQueryable<Company> Companies { get; }
-
-        IProductPropertyRepository ProductPropertyRepository { get; }
-
-        IQueryable<ProductProperty> ProductsProperties { get; }*/
+        /// <summary>
+        /// Gets the employees.
+        /// </summary>
+        IQueryable<EmployeeStatistic> EmployeeStatistics { get; }
     }
 }

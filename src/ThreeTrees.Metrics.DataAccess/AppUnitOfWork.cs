@@ -7,6 +7,8 @@ using ThreeTrees.Metrics.DataAccess.Repositories;
 using ThreeTrees.Metrics.Domain;
 using ThreeTrees.Metrics.Domain.Employees.Entities;
 using ThreeTrees.Metrics.Domain.Employees.Repositories;
+using ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities;
+using ThreeTrees.Metrics.Domain.EmployeeStatistics.Repositories;
 using ThreeTrees.Tools.EFCore2;
 
 namespace ThreeTrees.Metrics.DataAccess
@@ -15,6 +17,8 @@ namespace ThreeTrees.Metrics.DataAccess
     public class AppUnitOfWork : EfUnitOfWork<AppDbContext>, IAppUnitOfWork
     {
         private IEmployeeRepository employeeRepository;
+
+        private IEmployeeStatisticRepository employeeStatisticRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AppUnitOfWork"/> class.
@@ -39,21 +43,28 @@ namespace ThreeTrees.Metrics.DataAccess
             }
         }
 
+        /// <inheritdoc/>
+        public IEmployeeStatisticRepository EmployeeStatisticRepository
+        {
+            get
+            {
+                if (this.employeeStatisticRepository == null)
+                {
+                    this.employeeStatisticRepository = new EmployeeStatisticRepository(this.Context);
+                }
+
+                return this.employeeStatisticRepository;
+            }
+        }
+
         /// <summary>
         /// Gets the employees.
         /// </summary>
         public IQueryable<Employee> Employees => this.Context.Employees;
 
-        /*public IProductRepository ProductRepository => new ProductRepository(Context);
-
-        public IQueryable<Product> Products => Context.Products;
-
-        public ICompanyRepository CompanyRepository => new CompanyRepository(Context);
-
-        public IQueryable<Company> Companies => Context.Companies;
-
-        public IProductPropertyRepository ProductPropertyRepository => new ProductPropertyRepository(Context);
-
-        public IQueryable<ProductProperty> ProductsProperties => Context.ProductProperties;*/
+        /// <summary>
+        /// Gets the employee statistics.
+        /// </summary>
+        public IQueryable<EmployeeStatistic> EmployeeStatistics => this.Context.EmployeeStatistics;
     }
 }

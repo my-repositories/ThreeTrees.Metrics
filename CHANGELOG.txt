@@ -1,5 +1,7 @@
-1.0.6 [2018-04-11]
+1.0.7 [2018-04-11]
 [*] Resolve stylecop warnings
+[+] Create employee screens
+[+] Create statistic screens
 
 1.0.5 [2018-04-10]
 [+] Add Tools projects
