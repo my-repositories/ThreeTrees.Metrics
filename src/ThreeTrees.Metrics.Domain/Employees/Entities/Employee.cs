@@ -47,6 +47,7 @@ namespace ThreeTrees.Metrics.Domain.Employees.Entities
         /// Gets or sets the Birthday.
         /// </summary>
         [Required]
+        [DataType(DataType.Date)]
         public DateTime Birthday { get; set; }
 
         /// <summary>

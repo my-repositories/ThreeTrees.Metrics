@@ -1,31 +1,88 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Welcome Page";
 }
 
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <h1>@ViewBag.Title</h1>
+    <p class="lead">AleksanderL - Project Base Structure</p>
+    <p><a href="https://saritasa.atlassian.net/browse/SN-3/asp.net" class="btn btn-primary btn-lg">#SN-3 &raquo;</a></p>
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="col-xs-12">
+            <div class="blob-viewer" data-rich-type="markup" data-type="rich" data-url="/loktionov129/aleksanderl-test-task/blob/develop/docs/FinalTask.md?format=json&amp;viewer=rich" data-loading="true" data-loaded="true">
+                <div class="blob-viewer" data-rich-type="markup" data-type="rich">
+                    <div class="file-content wiki">
+                        <h1 dir="auto"><a id="user-content-crm-metrics" class="anchor" href="https://gitlab.com/loktionov129/aleksanderl-test-task/blob/develop/docs/FinalTask.md#crm-metrics" aria-hidden="true"></a>CRM Metrics</h1>
+                        <p dir="auto">You are developing CRM Metrics system for software development company ThreeTrees.</p>
+                        <p dir="auto">They need have UI to add their users and their metrics to the system. Afterwards they want to get statistic for best employees and worst ones that they will fire.</p>
+                        <h2 dir="auto"><a id="user-content-technology-stack" class="anchor" href="https://gitlab.com/loktionov129/aleksanderl-test-task/blob/develop/docs/FinalTask.md#technology-stack" aria-hidden="true"></a>Technology Stack</h2>
+                        <ul dir="auto">
+                            <li>ASP.NET Core</li>
+                            <li>Saritasa.Tools</li>
+                            <li>Bootstrap 4</li>
+                            <li>Microsoft SQL Server</li>
+                        </ul>
+                        <h2 dir="auto"><a id="user-content-domain-model" class="anchor" href="https://gitlab.com/loktionov129/aleksanderl-test-task/blob/develop/docs/FinalTask.md#domain-model" aria-hidden="true"></a>Domain Model</h2>
+                        <p dir="auto">Here are main entites of application.</p>
+                        <p dir="auto">Employee</p>
+                        <ul dir="auto">
+                            <li>Name</li>
+                            <li>Birthday</li>
+                            <li>Branch (Russia, USA, Kazahstan, Vietnam)</li>
+                        </ul>
+                        <p dir="auto">Employee Statistic</p>
+                        <ul dir="auto">
+                            <li>Year (from 2000 till now)</li>
+                            <li>Month</li>
+                            <li>Employee (FK)</li>
+                            <li>Total tasks done</li>
+                            <li>Total hours billed</li>
+                            <li>Total coffee cups drunk</li>
+                            <li>Total Mortal Combat games played</li>
+                        </ul>
+                        <h2 dir="auto"><a id="user-content-business-requirements" class="anchor" href="https://gitlab.com/loktionov129/aleksanderl-test-task/blob/develop/docs/FinalTask.md#business-requirements" aria-hidden="true"></a>Business Requirements</h2>
+                        <ol dir="auto">
+                            <li>For now no authorization required.</li>
+                            <li>Users should be able to add/edit/remove employees.</li>
+                            <li>Users should be able to add/edit/remove employee statistic.</li>
+                            <li>For an employee only one year-month record should exists.</li>
+                            <li>
+                                There should be special page with statistic to show (per selected year):
+                                <ul>
+                                    <li>Best/worst employee by tasks done</li>
+                                    <li>Best/worst employee by hours billed</li>
+                                    <li>Total coffees drunk</li>
+                                    <li>Total Mortal Combat games played</li>
+                                </ul>
+                            </li>
+                            <li>If user tries to remove employee show alert. Remove his correspond data.</li>
+                        </ol>
+                        <h2 dir="auto"><a id="user-content-ui-requirements" class="anchor" href="https://gitlab.com/loktionov129/aleksanderl-test-task/blob/develop/docs/FinalTask.md#ui-requirements" aria-hidden="true"></a>UI Requirements</h2>
+                        <p dir="auto">There are several screen should be available:</p>
+                        <ol dir="auto">
+                            <li>Screen where user can see the list of all employees. User can edit/remove there.</li>
+                            <li>Screen to add/edit employee.</li>
+                            <li>Screen to show the list of all statistic items. User can edit/remove there.</li>
+                            <li>Screen to add new statistic item.</li>
+                            <li>Screen to show overall statistic by year.</li>
+                        </ol>
+                        <p dir="auto">Other requirements:</p>
+                        <ol dir="auto">
+                            <li>Whole UI should be implemented using standard Bootstrap components with default theme.</li>
+                            <li>Implement client side and server side validation.</li>
+                            <li>All fields are required.</li>
+                        </ol>
+                        <h2 dir="auto"><a id="user-content-technical-requirements" class="anchor" href="https://gitlab.com/loktionov129/aleksanderl-test-task/blob/develop/docs/FinalTask.md#technical-requirements" aria-hidden="true"></a>Technical Requirements</h2>
+                        <ol dir="auto">
+                            <li>The project must conform<span>&nbsp;</span><a href="https://gitlab.com/loktionov129/aleksanderl-test-task/blob/develop/docs/ProjectStructure.html">general project structure</a>.</li>
+                            <li>Use Saritasa.Tools project and CQS architecture.</li>
+                        </ol>
+                        <h2 dir="auto"><a id="user-content-step-1" class="anchor" href="https://gitlab.com/loktionov129/aleksanderl-test-task/blob/develop/docs/FinalTask.md#step-1" aria-hidden="true"></a>Step 1</h2>
+                        <h2 dir="auto"><a id="user-content-step-2" class="anchor" href="https://gitlab.com/loktionov129/aleksanderl-test-task/blob/develop/docs/FinalTask.md#step-2" aria-hidden="true"></a>Step 2</h2>
+                        <h2 dir="auto"><a id="user-content-step-3" class="anchor" href="https://gitlab.com/loktionov129/aleksanderl-test-task/blob/develop/docs/FinalTask.md#step-3" aria-hidden="true"></a>Step 3</h2>
+                    </div>
+                </div>
+            </div>
     </div>
 </div>

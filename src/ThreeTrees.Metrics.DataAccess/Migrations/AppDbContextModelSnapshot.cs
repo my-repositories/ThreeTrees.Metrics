@@ -10,7 +10,7 @@ namespace ThreeTrees.Metrics.DataAccess.Migrations
 {
     /// <inheritdoc />
     [DbContext(typeof(AppDbContext))]
-    internal partial class AppDbContextModelSnapshot : ModelSnapshot
+    public partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         /// <inheritdoc />
         protected override void BuildModel(ModelBuilder modelBuilder)

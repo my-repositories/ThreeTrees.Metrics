@@ -2,6 +2,7 @@
 // Licensed under the BSD license. See LICENSE file in the project root for full license information.
 
 using System;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -9,11 +10,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ThreeTrees.Metrics.DataAccess.Migrations
 {
+    /// <summary>
+    /// The initial.
+    /// </summary>
     [DbContext(typeof(AppDbContext))]
-    [Migration("20180409083127_Initial")]
+    [Migration("20180411093724_Initial")]
     partial class Initial
     {
-        /// <inheritdoc/>
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
