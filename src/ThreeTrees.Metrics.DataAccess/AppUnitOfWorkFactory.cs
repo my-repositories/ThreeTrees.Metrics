@@ -11,7 +11,10 @@ namespace ThreeTrees.Metrics.DataAccess
     {
         private AppDbContext context;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AppUnitOfWorkFactory"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
         public AppUnitOfWorkFactory(AppDbContext context)
         {
             this.context = context;
@@ -20,7 +23,7 @@ namespace ThreeTrees.Metrics.DataAccess
         /// <inheritdoc />
         public IAppUnitOfWork Create()
         {
-            return new AppUnitOfWork(context);
+            return new AppUnitOfWork(this.context);
         }
 
         /// <summary>
@@ -34,7 +37,7 @@ namespace ThreeTrees.Metrics.DataAccess
         /// </returns>
         public IAppUnitOfWork Create(IsolationLevel isolationLevel)
         {
-            return new AppUnitOfWork(context);
+            return new AppUnitOfWork(this.context);
         }
     }
 }

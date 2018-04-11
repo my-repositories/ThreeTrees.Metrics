@@ -22,7 +22,7 @@ namespace ThreeTrees.Metrics.Web
         /// </param>
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace ThreeTrees.Metrics.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataAccess.AppDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
         }
 

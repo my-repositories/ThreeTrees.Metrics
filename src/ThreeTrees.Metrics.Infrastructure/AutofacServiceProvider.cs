@@ -23,12 +23,12 @@ namespace ThreeTrees.Metrics.Infrastructure
         }
 
         /// <inheritdoc />
-        public object GetService(Type serviceType) => context.Resolve(serviceType);
+        public object GetService(Type serviceType) => this.context.Resolve(serviceType);
 
         /// <inheritdoc />
         public void Dispose()
         {
-            var disposable = context as IDisposable;
+            var disposable = this.context as IDisposable;
             disposable?.Dispose();
         }
     }

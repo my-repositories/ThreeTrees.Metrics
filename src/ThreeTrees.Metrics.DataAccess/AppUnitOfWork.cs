@@ -16,7 +16,10 @@ namespace ThreeTrees.Metrics.DataAccess
     {
         private IEmployeeRepository employeeRepository;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AppUnitOfWork"/> class.
+        /// </summary>
+        /// <param name="context">AppDb context.</param>
         public AppUnitOfWork(AppDbContext context)
             : base(context)
         {
@@ -27,20 +30,19 @@ namespace ThreeTrees.Metrics.DataAccess
         {
             get
             {
-
-                if (employeeRepository == null)
+                if (this.employeeRepository == null)
                 {
-                    employeeRepository = new EmployeeRepository(Context);
+                    this.employeeRepository = new EmployeeRepository(this.Context);
                 }
 
-                return employeeRepository;
+                return this.employeeRepository;
             }
         }
 
         /// <summary>
         /// Gets the employees.
         /// </summary>
-        public IQueryable<Employee> Employees => Context.Employees;
+        public IQueryable<Employee> Employees => this.Context.Employees;
 
         /*public IProductRepository ProductRepository => new ProductRepository(Context);
 

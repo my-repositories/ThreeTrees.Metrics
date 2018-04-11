@@ -9,7 +9,10 @@ namespace ThreeTrees.Metrics.DataAccess.Repositories
     /// <inheritdoc cref="IEmployeeRepository" />
     public class EmployeeRepository : Tools.EFCore2.EfRepository<Employee, AppDbContext>, IEmployeeRepository
     {
-        /// <inheritdoc />
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EmployeeRepository"/> class.
+        /// </summary>
+        /// <param name="context">AppDb context.</param>
         public EmployeeRepository(AppDbContext context)
             : base(context)
         {

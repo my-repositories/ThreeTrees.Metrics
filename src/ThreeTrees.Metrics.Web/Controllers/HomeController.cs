@@ -18,7 +18,7 @@ namespace ThreeTrees.Metrics.Web.Controllers
         /// </returns>
         public IActionResult Index()
         {
-            return View();
+            return this.View();
         }
 
         /// <summary>
@@ -29,9 +29,9 @@ namespace ThreeTrees.Metrics.Web.Controllers
         /// </returns>
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            this.ViewData["Message"] = "Your application description page.";
 
-            return View();
+            return this.View();
         }
 
         /// <summary>
@@ -42,9 +42,9 @@ namespace ThreeTrees.Metrics.Web.Controllers
         /// </returns>
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            this.ViewData["Message"] = "Your contact page.";
 
-            return View();
+            return this.View();
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace ThreeTrees.Metrics.Web.Controllers
         /// </returns>
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return this.View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
         }
     }
 }

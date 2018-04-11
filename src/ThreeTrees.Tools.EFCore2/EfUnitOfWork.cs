@@ -13,10 +13,13 @@ namespace ThreeTrees.Tools.EFCore2
     {
         private bool disposed;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EfUnitOfWork{TContext}"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
         public EfUnitOfWork(TContext context)
         {
-            Context = context ?? throw new ArgumentNullException(nameof(context));
+            this.Context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         /// <summary>
@@ -27,26 +30,26 @@ namespace ThreeTrees.Tools.EFCore2
         /// <inheritdoc />
         public void Dispose()
         {
-            Dispose(true);
+            this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
         /// <inheritdoc />
         public virtual int SaveChanges()
         {
-            return Context.SaveChanges();
+            return this.Context.SaveChanges();
         }
 
         /// <inheritdoc />
         public virtual Task<int> SaveChangesAsync()
         {
-            return Context.SaveChangesAsync();
+            return this.Context.SaveChangesAsync();
         }
 
         /// <inheritdoc />
         public virtual Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
-            return Context.SaveChangesAsync(cancellationToken);
+            return this.Context.SaveChangesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -55,18 +58,18 @@ namespace ThreeTrees.Tools.EFCore2
         /// <param name="disposing">Dispose managed resources.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (!this.disposed)
             {
                 if (disposing)
                 {
-                    if (Context != null)
+                    if (this.Context != null)
                     {
-                        Context.Dispose();
-                        Context = null;
+                        this.Context.Dispose();
+                        this.Context = null;
                     }
                 }
 
-                disposed = true;
+                this.disposed = true;
             }
         }
     }

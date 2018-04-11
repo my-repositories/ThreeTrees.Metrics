@@ -6,13 +6,18 @@ namespace ThreeTrees.Tools.Domain.Exceptions
     /// <inheritdoc />
     public class NotFoundException : DomainException
     {
-        /// <inheritdoc />
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NotFoundException"/> class.
+        /// </summary>
         public NotFoundException()
             : base("NotFoundException")
         {
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NotFoundException"/> class.
+        /// </summary>
+        /// <param name="message">The message.</param>
         public NotFoundException(string message)
             : base(message)
         {

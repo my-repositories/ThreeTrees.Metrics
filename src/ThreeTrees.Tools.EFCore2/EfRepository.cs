@@ -25,8 +25,8 @@ namespace ThreeTrees.Tools.EFCore2
         /// <param name="context">Database context.</param>
         public EfRepository(TContext context)
         {
-            Context = context ?? throw new ArgumentNullException(nameof(context));
-            Set = Context.Set<TEntity>();
+            this.Context = context ?? throw new ArgumentNullException(nameof(context));
+            this.Set = this.Context.Set<TEntity>();
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace ThreeTrees.Tools.EFCore2
         /// <inheritdoc />
         public virtual TEntity Get(params object[] keyValues)
         {
-            var entity = Set.Find(keyValues);
+            var entity = this.Set.Find(keyValues);
             if (entity == null)
             {
                 throw new NotFoundException();
@@ -54,7 +54,7 @@ namespace ThreeTrees.Tools.EFCore2
         /// <inheritdoc />
         public virtual IEnumerable<TEntity> GetAll(Expression<Func<TEntity, object>>[] includes)
         {
-            var query = Set.AsQueryable();
+            var query = this.Set.AsQueryable();
             foreach (var include in includes)
             {
                 query = query.Include(include);
@@ -68,7 +68,7 @@ namespace ThreeTrees.Tools.EFCore2
             Expression<Func<TEntity, bool>> predicate,
             Expression<Func<TEntity, object>>[] includes)
         {
-            var query = Context.Set<TEntity>().Where(predicate);
+            var query = this.Context.Set<TEntity>().Where(predicate);
             foreach (var include in includes)
             {
                 query = query.Include(include);
@@ -80,31 +80,31 @@ namespace ThreeTrees.Tools.EFCore2
         /// <inheritdoc />
         public virtual void Add(TEntity entity)
         {
-            Set.Add(entity);
+            this.Set.Add(entity);
         }
 
         /// <inheritdoc />
         public virtual void AddRange(IEnumerable<TEntity> entities)
         {
-            Set.AddRange(entities);
+            this.Set.AddRange(entities);
         }
 
         /// <inheritdoc />
         public virtual void Remove(TEntity entity)
         {
-            Set.Remove(entity);
+            this.Set.Remove(entity);
         }
 
         /// <inheritdoc />
         public virtual void RemoveRange(IEnumerable<TEntity> entities)
         {
-            Set.RemoveRange(entities);
+            this.Set.RemoveRange(entities);
         }
 
         /// <inheritdoc />
         public virtual async Task<TEntity> GetAsync(CancellationToken cancellationToken, params object[] keyValues)
         {
-            var entity = await Set.FindAsync(keyValues, cancellationToken).ConfigureAwait(false);
+            var entity = await this.Set.FindAsync(keyValues, cancellationToken).ConfigureAwait(false);
             if (entity == null)
             {
                 throw new NotFoundException();
@@ -118,7 +118,7 @@ namespace ThreeTrees.Tools.EFCore2
             CancellationToken cancellationToken,
             params Expression<Func<TEntity, object>>[] includes)
         {
-            var query = Set.AsQueryable();
+            var query = this.Set.AsQueryable();
             foreach (var include in includes)
             {
                 query = query.Include(include);
@@ -133,7 +133,7 @@ namespace ThreeTrees.Tools.EFCore2
             CancellationToken cancellationToken,
             params Expression<Func<TEntity, object>>[] includes)
         {
-            var query = Context.Set<TEntity>().Where(predicate);
+            var query = this.Context.Set<TEntity>().Where(predicate);
             foreach (var include in includes)
             {
                 query = query.Include(include);
@@ -145,7 +145,7 @@ namespace ThreeTrees.Tools.EFCore2
         /// <inheritdoc />
         public virtual Task AddAsync(TEntity entity, CancellationToken cancellationToken)
         {
-            Set.Add(entity);
+            this.Set.Add(entity);
 
             // TODO: Find InternalHelpers
             // return InternalHelpers.CompletedTask;
@@ -155,7 +155,7 @@ namespace ThreeTrees.Tools.EFCore2
         /// <inheritdoc />
         public virtual Task RemoveAsync(TEntity entity, CancellationToken cancellationToken)
         {
-            Set.Remove(entity);
+            this.Set.Remove(entity);
 
             // TODO: Find InternalHelpers
             // return InternalHelpers.CompletedTask;

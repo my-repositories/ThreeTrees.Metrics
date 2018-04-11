@@ -10,7 +10,10 @@ namespace ThreeTrees.Metrics.DataAccess
     /// <inheritdoc />
     public class AppDbContext : DbContext
     {
-        /// <inheritdoc />
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AppDbContext"/> class.
+        /// </summary>
+        /// <param name="options">DbContext options.</param>
         public AppDbContext(DbContextOptions options)
             : base(options)
         {

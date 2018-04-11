@@ -9,7 +9,8 @@ namespace ThreeTrees.Tools.Domain
     /// <typeparam name="TUnitOfWork">
     /// The TUnitOfWork.
     /// </typeparam>
-    public interface IUnitOfWorkFactory<out TUnitOfWork> where TUnitOfWork : class
+    public interface IUnitOfWorkFactory<out TUnitOfWork>
+        where TUnitOfWork : class
     {
         /// <summary>
         /// Creates unit of work with default isolation level.
