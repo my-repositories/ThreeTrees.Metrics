@@ -25,9 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThreeTrees.Metrics.Web", "T
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{1417E061-B148-44B8-920E-0878A9F97266}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreeTrees.Tools.Domain", "ThreeTrees.Tools.Domain\ThreeTrees.Tools.Domain.csproj", "{981D47B5-393F-411B-AF57-B9631F3D019E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThreeTrees.Tools.Domain", "ThreeTrees.Tools.Domain\ThreeTrees.Tools.Domain.csproj", "{981D47B5-393F-411B-AF57-B9631F3D019E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreeTrees.Tools.EFCore2", "ThreeTrees.Tools.EFCore2\ThreeTrees.Tools.EFCore2.csproj", "{ED60EF37-0AA5-4616-877C-B483887AE964}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThreeTrees.Tools.EFCore2", "ThreeTrees.Tools.EFCore2\ThreeTrees.Tools.EFCore2.csproj", "{ED60EF37-0AA5-4616-877C-B483887AE964}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreeTrees.Tools.Messages.Abstractions", "ThreeTrees.Tools.Messages.Abstractions\ThreeTrees.Tools.Messages.Abstractions.csproj", "{4C03C443-1D4C-4194-83CC-F77D47444D12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +85,10 @@ Global
 		{ED60EF37-0AA5-4616-877C-B483887AE964}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED60EF37-0AA5-4616-877C-B483887AE964}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED60EF37-0AA5-4616-877C-B483887AE964}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C03C443-1D4C-4194-83CC-F77D47444D12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C03C443-1D4C-4194-83CC-F77D47444D12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C03C443-1D4C-4194-83CC-F77D47444D12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C03C443-1D4C-4194-83CC-F77D47444D12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{981D47B5-393F-411B-AF57-B9631F3D019E} = {1417E061-B148-44B8-920E-0878A9F97266}
 		{ED60EF37-0AA5-4616-877C-B483887AE964} = {1417E061-B148-44B8-920E-0878A9F97266}
+		{4C03C443-1D4C-4194-83CC-F77D47444D12} = {1417E061-B148-44B8-920E-0878A9F97266}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BB0B8674-11C3-4DD0-B314-D6FE65B05FC5}

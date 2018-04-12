@@ -1,86 +1,79 @@
 ﻿// Copyright (c) ThreeTrees. All rights reserved.
 // Licensed under the BSD license. See LICENSE file in the project root for full license information.
 
-using System.Threading.Tasks;
+using System;
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ThreeTrees.Metrics.DataAccess;
-using ThreeTrees.Metrics.Domain.Employees.Entities;
+using ThreeTrees.Metrics.Domain.Employees.Commands;
+using ThreeTrees.Metrics.Domain.Employees.Queries;
+using ThreeTrees.Tools.Domain.Exceptions;
+using ThreeTrees.Tools.Messages.Abstractions;
 
 namespace ThreeTrees.Metrics.Web.Controllers
 {
     /// <inheritdoc />
     public class EmployeeController : Controller
     {
-        private readonly AppDbContext context;
+        private readonly EmployeeQueries employeeQueries;
+        private readonly IMessagePipelineService pipelineService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EmployeeController"/> class.
         /// </summary>
-        /// <param name="context">AppDb context.</param>
-        public EmployeeController(AppDbContext context)
+        /// <param name="employeeQueries">The employee queries.</param>
+        /// <param name="pipelineService">The pipeline service.</param>
+        public EmployeeController(EmployeeQueries employeeQueries, IMessagePipelineService pipelineService)
         {
-            this.context = context;
+            this.employeeQueries = employeeQueries ?? throw new ArgumentNullException(nameof(employeeQueries));
+            this.pipelineService = pipelineService ?? throw new ArgumentNullException(nameof(pipelineService));
         }
 
         /// <summary>
         /// GET: Employee
         /// </summary>
-        /// <returns>The action result.</returns>
-        public async Task<IActionResult> Index()
+        /// <returns>The view result.</returns>
+        public ViewResult Index()
         {
-            return this.View(await this.context.Employees.ToListAsync());
+            return this.View(this.employeeQueries.GetAll());
         }
 
         /// <summary>
         /// GET: Employee/Details/5
         /// </summary>
         /// <param name="id">The id.</param>
-        /// <returns>The action result.</returns>
-        public async Task<IActionResult> Details(int? id)
+        /// <returns>The view result.</returns>
+        public ViewResult Details(int id)
         {
-            if (id == null)
-            {
-                return this.NotFound();
-            }
-
-            var employee = await this.context.Employees
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
-            {
-                return this.NotFound();
-            }
-
-            return this.View(employee);
+            return this.View(this.employeeQueries.Get(id));
         }
 
         /// <summary>
         /// GET: Employee/Create
         /// </summary>
-        /// <returns>The action result.</returns>
-        public IActionResult Create()
+        /// <returns>The view result.</returns>
+        public ViewResult Create()
         {
-            return this.View();
+            return this.View(new CreateEmployeeCommand());
         }
 
         /// <summary>
         /// POST: Employee/Create
         /// </summary>
-        /// <param name="employee">The employee.</param>
+        /// <param name="command">The create employee command.</param>
         /// <returns>The action result.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Employee employee)
+        public ActionResult Create(CreateEmployeeCommand command)
         {
-            if (this.ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                this.context.Add(employee);
-                await this.context.SaveChangesAsync();
-                return this.RedirectToAction(nameof(this.Index));
+                return this.View(command);
             }
 
-            return this.View(employee);
+            // TODO: Replace context to commands
+            // this.context.Add(command);
+            // this.context.SaveChanges();
+            return this.RedirectToAction(nameof(this.Index));
         }
 
         /// <summary>
@@ -88,45 +81,41 @@ namespace ThreeTrees.Metrics.Web.Controllers
         /// </summary>
         /// <param name="id">The id.</param>
         /// <returns>The action result.</returns>
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return this.NotFound();
-            }
-
-            var employee = await this.context.Employees.SingleOrDefaultAsync(m => m.Id == id);
+            var employee = this.employeeQueries.Get(id);
             if (employee == null)
             {
                 return this.NotFound();
             }
 
-            return this.View(employee);
+            return this.View(new UpdateEmployeeCommand(employee));
         }
 
         /// <summary>
         /// POST: Employee/Edit/5
         /// </summary>
         /// <param name="id">The id.</param>
-        /// <param name="employee">The employee.</param>
+        /// <param name="command">The create employee command.</param>
         /// <returns>The action result.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Employee employee)
+        public ActionResult Edit(int id, UpdateEmployeeCommand command)
         {
-            if (id != employee.Id)
+            if (id != command.EmployeeId)
             {
                 return this.NotFound();
             }
 
-            if (this.ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                this.context.Update(employee);
-                await this.context.SaveChangesAsync();
-                return this.RedirectToAction(nameof(this.Index));
+                return this.View(command);
             }
 
-            return this.View(employee);
+            // TODO: Replace context to commands
+            // this.context.Update(command);
+            // this.context.SaveChanges();
+            return this.RedirectToAction(nameof(this.Index));
         }
 
         /// <summary>
@@ -134,21 +123,9 @@ namespace ThreeTrees.Metrics.Web.Controllers
         /// </summary>
         /// <param name="id">The id.</param>
         /// <returns>The action result.</returns>
-        public async Task<IActionResult> Delete(int? id)
+        public ViewResult Delete(int id)
         {
-            if (id == null)
-            {
-                return this.NotFound();
-            }
-
-            var employee = await this.context.Employees
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
-            {
-                return this.NotFound();
-            }
-
-            return this.View(employee);
+            return this.View(new DeleteEmployeeCommand(id));
         }
 
         /// <summary>
@@ -159,11 +136,19 @@ namespace ThreeTrees.Metrics.Web.Controllers
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var employee = await this.context.Employees.SingleOrDefaultAsync(m => m.Id == id);
-            this.context.Employees.Remove(employee);
-            await this.context.SaveChangesAsync();
+            // TODO: Replace context to commands
+            try
+            {
+                // pipelineService.HandleCommand(new DeleteProductCommand(id));
+            }
+            catch (DomainException ex)
+            {
+                this.ModelState.AddModelError(string.Empty, ex.Message);
+                return this.View(id);
+            }
+
             return this.RedirectToAction(nameof(this.Index));
         }
     }

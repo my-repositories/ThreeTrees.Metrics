@@ -19,7 +19,7 @@ namespace ThreeTrees.Metrics.Web.Controllers
         /// <summary>
         /// Initializes a new instance of the <see cref="EmployeeStatisticController"/> class.
         /// </summary>
-        /// <param name="context">AppDb context.</param>
+        /// <param name="context">The AppDb context.</param>
         public EmployeeStatisticController(AppDbContext context)
         {
             this.context = context;
