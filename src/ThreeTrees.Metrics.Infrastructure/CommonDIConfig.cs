@@ -4,6 +4,7 @@
 using System;
 
 using Autofac;
+using ThreeTrees.Tools.Messages.Common;
 
 namespace ThreeTrees.Metrics.Infrastructure
 {
@@ -21,11 +22,28 @@ namespace ThreeTrees.Metrics.Infrastructure
             var builder = new ContainerBuilder();
 
             // Bindings.
-            builder.RegisterType<AutofacServiceProvider>().As<IServiceProvider>()
+            builder.RegisterType<AutofacServiceProvider>()
+                .As<IServiceProvider>()
                 .InstancePerRequest()
                 .InstancePerLifetimeScope();
 
+            builder.RegisterType<DataAccess.AppUnitOfWorkFactory>()
+                .AsSelf()
+                .AsImplementedInterfaces();
+
+            builder.Register(c => c.Resolve<DataAccess.AppUnitOfWorkFactory>().Create())
+                .AsImplementedInterfaces();
+
+            builder.RegisterType<Domain.Employees.Queries.EmployeeQueries>()
+                .AsSelf();
+
             builder.RegisterType<DataAccess.AppDbContext>().AsSelf();
+
+            // Command pipeline.
+            var messagePipelineContainer = new DefaultMessagePipelineContainer();
+            messagePipelineContainer.AddCommandPipeline()
+                .UseDefaultMiddlewares(System.Reflection.Assembly.GetAssembly(typeof(Domain.Users.Entities.User)))
+                .AddMiddleware(adoNetRepositoryMiddleware);
 
             return builder;
         }

@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThreeTrees.Tools.EFCore2", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreeTrees.Tools.Messages.Abstractions", "ThreeTrees.Tools.Messages.Abstractions\ThreeTrees.Tools.Messages.Abstractions.csproj", "{4C03C443-1D4C-4194-83CC-F77D47444D12}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreeTrees.Tools.Messages", "ThreeTrees.Tools.Messages\ThreeTrees.Tools.Messages.csproj", "{DBE945BA-B0D4-4DA7-AEDE-A5223A86CDAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,6 +91,10 @@ Global
 		{4C03C443-1D4C-4194-83CC-F77D47444D12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C03C443-1D4C-4194-83CC-F77D47444D12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C03C443-1D4C-4194-83CC-F77D47444D12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBE945BA-B0D4-4DA7-AEDE-A5223A86CDAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBE945BA-B0D4-4DA7-AEDE-A5223A86CDAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBE945BA-B0D4-4DA7-AEDE-A5223A86CDAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBE945BA-B0D4-4DA7-AEDE-A5223A86CDAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +103,7 @@ Global
 		{981D47B5-393F-411B-AF57-B9631F3D019E} = {1417E061-B148-44B8-920E-0878A9F97266}
 		{ED60EF37-0AA5-4616-877C-B483887AE964} = {1417E061-B148-44B8-920E-0878A9F97266}
 		{4C03C443-1D4C-4194-83CC-F77D47444D12} = {1417E061-B148-44B8-920E-0878A9F97266}
+		{DBE945BA-B0D4-4DA7-AEDE-A5223A86CDAE} = {1417E061-B148-44B8-920E-0878A9F97266}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BB0B8674-11C3-4DD0-B314-D6FE65B05FC5}

@@ -33,6 +33,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ThreeTrees.Metrics.Domain\ThreeTrees.Metrics.Domain.csproj" />
     <ProjectReference Include="..\ThreeTrees.Metrics.Infrastructure\ThreeTrees.Metrics.Infrastructure.csproj" />
+    <ProjectReference Include="..\ThreeTrees.Tools.Messages.Abstractions\ThreeTrees.Tools.Messages.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

@@ -26,6 +26,7 @@
     <ProjectReference Include="..\ThreeTrees.Metrics.DataAccess\ThreeTrees.Metrics.DataAccess.csproj" />
     <ProjectReference Include="..\ThreeTrees.Metrics.Domain\ThreeTrees.Metrics.Domain.csproj" />
     <ProjectReference Include="..\ThreeTrees.Metrics.Services\ThreeTrees.Metrics.Services.csproj" />
+    <ProjectReference Include="..\ThreeTrees.Tools.Messages\ThreeTrees.Tools.Messages.csproj" />
   </ItemGroup>
 
 </Project>
