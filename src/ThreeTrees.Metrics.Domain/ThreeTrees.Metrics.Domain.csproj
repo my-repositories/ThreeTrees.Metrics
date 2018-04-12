@@ -21,9 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Employees\Commands\" />
-    <Folder Include="Employees\Handlers\" />
-    <Folder Include="Employees\Queries\" />
     <Folder Include="Users\Abstract\" />
     <Folder Include="Users\Commands\" />
     <Folder Include="Users\Dtos\" />
