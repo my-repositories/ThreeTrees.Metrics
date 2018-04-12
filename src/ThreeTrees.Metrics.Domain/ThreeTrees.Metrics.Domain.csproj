@@ -1,53 +1,44 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\ThreeTrees.Metrics.Domain.xml</DocumentationFile>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DocumentationFile>bin\Debug\netstandard2.0\ThreeTrees.Metrics.Domain.xml</DocumentationFile>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="GlobalSuppressions.cs" />
-  </ItemGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <DocumentationFile>bin\Release\netstandard2.0\ThreeTrees.Metrics.Domain.xml</DocumentationFile>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="stylecop.json" />
-  </ItemGroup>
+    <ItemGroup>
+        <AdditionalFiles Include="..\..\tools\stylecop.json" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <AdditionalFiles Include="stylecop.json" />
-  </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Users\Abstract\" />
+        <Folder Include="Users\Commands\" />
+        <Folder Include="Users\Dtos\" />
+        <Folder Include="Users\Entities\" />
+        <Folder Include="Users\Events\" />
+        <Folder Include="Users\Exceptions\" />
+        <Folder Include="Users\Handlers\" />
+        <Folder Include="Users\Services\" />
+        <Folder Include="Users\Repositories\" />
+        <Folder Include="Users\Queries\" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Users\Abstract\" />
-    <Folder Include="Users\Commands\" />
-    <Folder Include="Users\Dtos\" />
-    <Folder Include="Users\Entities\" />
-    <Folder Include="Users\Events\" />
-    <Folder Include="Users\Exceptions\" />
-    <Folder Include="Users\Handlers\" />
-    <Folder Include="Users\Services\" />
-    <Folder Include="Users\Repositories\" />
-    <Folder Include="Users\Queries\" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Autofac" Version="4.7.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.0.2" />
+        <PackageReference Include="NLog" Version="4.5.2" />
+        <PackageReference Include="Saritasa.Tools.Domain" Version="0.3.0" />
+        <PackageReference Include="Saritasa.Tools.Messages.Abstractions" Version="0.3.0" />
+        <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.6.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.0.2" />
-    <PackageReference Include="NLog" Version="4.5.1" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ThreeTrees.Tools.Domain\ThreeTrees.Tools.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.ComponentModel.Annotations">
-      <HintPath>..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\system.componentmodel.annotations\4.4.0\ref\netstandard2.0\System.ComponentModel.Annotations.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
+    <ItemGroup>
+        <ProjectReference Include="..\ThreeTrees.Metrics.Shared\ThreeTrees.Metrics.Shared.csproj" />
+    </ItemGroup>
 </Project>

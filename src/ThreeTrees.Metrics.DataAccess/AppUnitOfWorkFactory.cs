@@ -2,6 +2,7 @@
 // Licensed under the BSD license. See LICENSE file in the project root for full license information.
 
 using System.Data;
+
 using ThreeTrees.Metrics.Domain;
 
 namespace ThreeTrees.Metrics.DataAccess
@@ -29,12 +30,8 @@ namespace ThreeTrees.Metrics.DataAccess
         /// <summary>
         /// The create.
         /// </summary>
-        /// <param name="isolationLevel">
-        /// The isolation level.
-        /// </param>
-        /// <returns>
-        /// The <see cref="IAppUnitOfWork"/>.
-        /// </returns>
+        /// <param name="isolationLevel">The isolation level.</param>
+        /// <returns>The <see cref="IAppUnitOfWork"/>.</returns>
         public IAppUnitOfWork Create(IsolationLevel isolationLevel)
         {
             return new AppUnitOfWork(this.context);

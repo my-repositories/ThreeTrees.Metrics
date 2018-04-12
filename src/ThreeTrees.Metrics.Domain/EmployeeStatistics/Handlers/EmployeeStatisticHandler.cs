@@ -1,15 +1,18 @@
 ﻿// Copyright (c) ThreeTrees. All rights reserved.
 // Licensed under the BSD license. See LICENSE file in the project root for full license information.
 
+using Saritasa.Tools.Domain.Exceptions;
+using Saritasa.Tools.Messages.Abstractions.Commands;
+
 using ThreeTrees.Metrics.Domain.EmployeeStatistics.Commands;
 using ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities;
-using ThreeTrees.Tools.Domain.Exceptions;
 
 namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Handlers
 {
     /// <summary>
     /// Employee statistic handler.
     /// </summary>
+    [CommandHandlers]
     public class EmployeeStatisticHandler
     {
         /// <summary>
@@ -19,7 +22,7 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Handlers
         /// <param name="uowFactory">The unit of work factory.</param>
         public void HandleCreate(CreateEmployeeStatisticCommand command, IAppUnitOfWorkFactory uowFactory)
         {
-            using (IAppUnitOfWork uow = uowFactory.Create())
+            using (var uow = uowFactory.Create())
             {
                 var statistic = new EmployeeStatistic
                 {
@@ -28,7 +31,7 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Handlers
                     DrunkedCups = command.DrunkedCups,
                     Employee = command.Employee,
                     EmployeeId = command.EmployeeId,
-                    PlayedMCGames = command.PlayedMCGames,
+                    PlayedMcGames = command.PlayedMCGames,
                     Month = command.Month,
                     Year = command.Year
                 };
@@ -45,7 +48,7 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Handlers
         /// <param name="uowFactory">The unit of work factory.</param>
         public void HandleDelete(DeleteEmployeeStatisticCommand command, IAppUnitOfWorkFactory uowFactory)
         {
-            using (IAppUnitOfWork uow = uowFactory.Create())
+            using (var uow = uowFactory.Create())
             {
                 var statistic = uow.EmployeeStatisticRepository.Get(command.EmployeeStatisticId);
                 if (statistic == null)
@@ -65,7 +68,7 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Handlers
         /// <param name="uowFactory">The unit of work factory.</param>
         public void HandleUpdate(UpdateEmployeeStatisticCommand command, IAppUnitOfWorkFactory uowFactory)
         {
-            using (IAppUnitOfWork uow = uowFactory.Create())
+            using (var uow = uowFactory.Create())
             {
                 var statistic = uow.EmployeeStatisticRepository.Get(command.EmployeeStatisticId);
                 statistic.BilledHours = command.BilledHours;
@@ -73,7 +76,7 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Handlers
                 statistic.DrunkedCups = command.DrunkedCups;
                 statistic.Employee = command.Employee;
                 statistic.EmployeeId = command.EmployeeId;
-                statistic.PlayedMCGames = command.PlayedMCGames;
+                statistic.PlayedMcGames = command.PlayedMCGames;
                 statistic.Month = command.Month;
                 statistic.Year = command.Year;
 

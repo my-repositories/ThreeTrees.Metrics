@@ -2,12 +2,14 @@
 // Licensed under the BSD license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
+using Saritasa.Tools.Messages.Abstractions;
+
 using ThreeTrees.Metrics.Domain.Employees.Commands;
 using ThreeTrees.Metrics.Domain.Employees.Queries;
-using ThreeTrees.Tools.Domain.Exceptions;
-using ThreeTrees.Tools.Messages.Abstractions;
 
 namespace ThreeTrees.Metrics.Web.Controllers
 {
@@ -31,20 +33,22 @@ namespace ThreeTrees.Metrics.Web.Controllers
         /// <summary>
         /// GET: Employee
         /// </summary>
+        /// <param name="token">The cancellation token.</param>
         /// <returns>The view result.</returns>
-        public ViewResult Index()
+        public async Task<ViewResult> Index(CancellationToken token = default(CancellationToken))
         {
-            return this.View(this.employeeQueries.GetAll());
+            return this.View(await this.employeeQueries.GetAllAsync(token));
         }
 
         /// <summary>
         /// GET: Employee/Details/5
         /// </summary>
         /// <param name="id">The id.</param>
+        /// <param name="token">The cancellation token.</param>
         /// <returns>The view result.</returns>
-        public ViewResult Details(int id)
+        public async Task<ViewResult> Details(int id, CancellationToken token = default(CancellationToken))
         {
-            return this.View(this.employeeQueries.Get(id));
+            return this.View(await this.employeeQueries.GetAsync(id, token));
         }
 
         /// <summary>
@@ -60,19 +64,18 @@ namespace ThreeTrees.Metrics.Web.Controllers
         /// POST: Employee/Create
         /// </summary>
         /// <param name="command">The create employee command.</param>
+        /// <param name="token">The token.</param>
         /// <returns>The action result.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CreateEmployeeCommand command)
+        public async Task<ActionResult> Create(CreateEmployeeCommand command, CancellationToken token = default(CancellationToken))
         {
             if (!this.ModelState.IsValid)
             {
                 return this.View(command);
             }
 
-            // TODO: Replace context to commands
-            // this.context.Add(command);
-            // this.context.SaveChanges();
+            await this.pipelineService.HandleCommandAsync(command, token);
             return this.RedirectToAction(nameof(this.Index));
         }
 
@@ -80,16 +83,11 @@ namespace ThreeTrees.Metrics.Web.Controllers
         /// GET: Employee/Edit/5
         /// </summary>
         /// <param name="id">The id.</param>
+        /// <param name="token">The token.</param>
         /// <returns>The action result.</returns>
-        public IActionResult Edit(int id)
+        public async Task<ViewResult> Edit(int id, CancellationToken token = default(CancellationToken))
         {
-            var employee = this.employeeQueries.Get(id);
-            if (employee == null)
-            {
-                return this.NotFound();
-            }
-
-            return this.View(new UpdateEmployeeCommand(employee));
+            return this.View(new UpdateEmployeeCommand(await this.employeeQueries.GetAsync(id, token)));
         }
 
         /// <summary>
@@ -97,24 +95,18 @@ namespace ThreeTrees.Metrics.Web.Controllers
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="command">The create employee command.</param>
+        /// <param name="token">The token.</param>
         /// <returns>The action result.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, UpdateEmployeeCommand command)
+        public async Task<ActionResult> Edit(int id, UpdateEmployeeCommand command, CancellationToken token = default(CancellationToken))
         {
-            if (id != command.EmployeeId)
-            {
-                return this.NotFound();
-            }
-
             if (!this.ModelState.IsValid)
             {
                 return this.View(command);
             }
 
-            // TODO: Replace context to commands
-            // this.context.Update(command);
-            // this.context.SaveChanges();
+            await this.pipelineService.HandleCommandAsync(command, token);
             return this.RedirectToAction(nameof(this.Index));
         }
 
@@ -122,33 +114,25 @@ namespace ThreeTrees.Metrics.Web.Controllers
         /// GET: Employee/Delete/5
         /// </summary>
         /// <param name="id">The id.</param>
+        /// <param name="token">The token.</param>
         /// <returns>The action result.</returns>
-        public ViewResult Delete(int id)
+        public async Task<ViewResult> Delete(int id, CancellationToken token = default(CancellationToken))
         {
-            return this.View(new DeleteEmployeeCommand(id));
+            return this.View(await this.employeeQueries.GetAsync(id, token));
         }
 
         /// <summary>
         /// POST: Employee/Delete/5
         /// </summary>
         /// <param name="id">The id.</param>
+        /// <param name="token">The token.</param>
         /// <returns>The action result.</returns>
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<RedirectToActionResult> DeleteConfirmed(int id, CancellationToken token = default(CancellationToken))
         {
-            // TODO: Replace context to commands
-            try
-            {
-                // pipelineService.HandleCommand(new DeleteProductCommand(id));
-            }
-            catch (DomainException ex)
-            {
-                this.ModelState.AddModelError(string.Empty, ex.Message);
-                return this.View(id);
-            }
-
+            await this.pipelineService.HandleCommandAsync(new DeleteEmployeeCommand(id), token);
             return this.RedirectToAction(nameof(this.Index));
         }
     }

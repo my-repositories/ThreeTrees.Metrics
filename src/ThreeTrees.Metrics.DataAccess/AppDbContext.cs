@@ -2,6 +2,7 @@
 // Licensed under the BSD license. See LICENSE file in the project root for full license information.
 
 using Microsoft.EntityFrameworkCore;
+
 using ThreeTrees.Metrics.Domain.Employees.Entities;
 using ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities;
 
@@ -32,9 +33,15 @@ namespace ThreeTrees.Metrics.DataAccess
         /// <inheritdoc/>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<EmployeeStatistic>()
+            modelBuilder.Entity<EmployeeStatistic>(e =>
+            {
+                e.HasKey(x => x.Id);
+                e.Property(p => p.Id).ValueGeneratedOnAdd();
+                e.HasKey(x => new { x.Year, x.Month });
+            })
+                .Entity<EmployeeStatistic>()
                 .HasOne(x => x.Employee)
-                .WithOne()
+                .WithMany(x => x.EmployeeStatistic)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

@@ -1,183 +1,149 @@
 ﻿// Copyright (c) ThreeTrees. All rights reserved.
 // Licensed under the BSD license. See LICENSE file in the project root for full license information.
 
-using System.Linq;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ThreeTrees.Metrics.DataAccess;
-using ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities;
+using Saritasa.Tools.Messages.Abstractions;
+
+using ThreeTrees.Metrics.Domain.Employees.Queries;
+using ThreeTrees.Metrics.Domain.EmployeeStatistics.Commands;
+using ThreeTrees.Metrics.Domain.EmployeeStatistics.Queries;
 
 namespace ThreeTrees.Metrics.Web.Controllers
 {
     /// <inheritdoc />
     public class EmployeeStatisticController : Controller
     {
-        private readonly AppDbContext context;
+        private readonly EmployeeQueries employeeQueries;
+        private readonly EmployeeStatisticQueries employeeStatisticQueries;
+        private readonly IMessagePipelineService pipelineService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EmployeeStatisticController"/> class.
         /// </summary>
-        /// <param name="context">The AppDb context.</param>
-        public EmployeeStatisticController(AppDbContext context)
+        /// <param name="employeeQueries">The employee queries.</param>
+        /// <param name="employeeStatisticQueries">The employee statistic queries.</param>
+        /// <param name="pipelineService">The pipeline service.</param>
+        public EmployeeStatisticController(EmployeeQueries employeeQueries, EmployeeStatisticQueries employeeStatisticQueries, IMessagePipelineService pipelineService)
         {
-            this.context = context;
+            this.employeeQueries = employeeQueries ?? throw new ArgumentNullException(nameof(employeeQueries));
+            this.employeeStatisticQueries = employeeStatisticQueries ?? throw new ArgumentNullException(nameof(employeeStatisticQueries));
+            this.pipelineService = pipelineService ?? throw new ArgumentNullException(nameof(pipelineService));
         }
 
         /// <summary>
         /// GET: EmployeeStatistic
         /// </summary>
-        /// <returns>The action result.</returns>
-        public async Task<IActionResult> Index()
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>The view result.</returns>
+        public async Task<ViewResult> Index(CancellationToken token = default(CancellationToken))
         {
-            var appDbContext = this.context.EmployeeStatistics.Include(e => e.Employee);
-            return this.View(await appDbContext.ToListAsync());
+            return this.View(await this.employeeStatisticQueries.GetAllAsync(token));
         }
 
         /// <summary>
         /// GET: EmployeeStatistic/Details/5
         /// </summary>
         /// <param name="id">The id.</param>
-        /// <returns>The action result.</returns>
-        public async Task<IActionResult> Details(int? id)
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>The view result.</returns>
+        public async Task<ViewResult> Details(int id, CancellationToken token = default(CancellationToken))
         {
-            if (id == null)
-            {
-                return this.NotFound();
-            }
-
-            var employeeStatistic = await this.context.EmployeeStatistics
-                .Include(e => e.Employee)
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (employeeStatistic == null)
-            {
-                return this.NotFound();
-            }
-
-            return this.View(employeeStatistic);
+            return this.View(await this.employeeStatisticQueries.GetAsync(id, token));
         }
 
         /// <summary>
         /// GET: EmployeeStatistic/Create
         /// </summary>
-        /// <returns>The action result.</returns>
-        public IActionResult Create()
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>The view result.</returns>
+        public async Task<ViewResult> Create(CancellationToken token = default(CancellationToken))
         {
-            this.ViewData["EmployeeId"] = new SelectList(this.context.Employees, "Id", "Name");
-            return this.View();
+            this.ViewBag.EmployeeId = new SelectList(await this.employeeQueries.GetAllAsync(token), "Id", "Name");
+            return this.View(new CreateEmployeeStatisticCommand());
         }
 
         /// <summary>
         /// POST: EmployeeStatistic/Create
         /// </summary>
-        /// <param name="employeeStatistic">The employee statistic.</param>
+        /// <param name="command">The create employee statistic command.</param>
+        /// <param name="token">The token.</param>
         /// <returns>The action result.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(EmployeeStatistic employeeStatistic)
+        public async Task<ActionResult> Create(CreateEmployeeStatisticCommand command, CancellationToken token = default(CancellationToken))
         {
-            if (this.ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                this.context.Add(employeeStatistic);
-                await this.context.SaveChangesAsync();
-                return this.RedirectToAction(nameof(this.Index));
+                this.ViewBag.EmployeeId = new SelectList(await this.employeeQueries.GetAllAsync(token), "Id", "Name");
+                return this.View(command);
             }
 
-            this.ViewData["EmployeeId"] = new SelectList(this.context.Employees, "Id", "Name", employeeStatistic.EmployeeId);
-            return this.View(employeeStatistic);
+            await this.pipelineService.HandleCommandAsync(command, token);
+            return this.RedirectToAction(nameof(this.Index));
         }
 
         /// <summary>
         /// GET: EmployeeStatistic/Edit/5
         /// </summary>
         /// <param name="id">The id.</param>
+        /// <param name="token">The token.</param>
         /// <returns>The action result.</returns>
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<ViewResult> Edit(int id, CancellationToken token = default(CancellationToken))
         {
-            if (id == null)
-            {
-                return this.NotFound();
-            }
-
-            var employeeStatistic = await this.context.EmployeeStatistics.SingleOrDefaultAsync(m => m.Id == id);
-            if (employeeStatistic == null)
-            {
-                return this.NotFound();
-            }
-
-            this.ViewData["EmployeeId"] = new SelectList(this.context.Employees, "Id", "Name", employeeStatistic.EmployeeId);
-            return this.View(employeeStatistic);
+            this.ViewBag.EmployeeId = new SelectList(await this.employeeQueries.GetAllAsync(token), "Id", "Name");
+            return this.View(new UpdateEmployeeStatisticCommand(await this.employeeStatisticQueries.GetAsync(id, token)));
         }
 
         /// <summary>
         /// POST: EmployeeStatistic/Edit/5
         /// </summary>
         /// <param name="id">The id.</param>
-        /// <param name="employeeStatistic">The employee statistic.</param>
+        /// <param name="command">The create employee statistic command.</param>
+        /// <param name="token">The token.</param>
         /// <returns>The action result.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, EmployeeStatistic employeeStatistic)
+        public async Task<ActionResult> Edit(int id, UpdateEmployeeStatisticCommand command, CancellationToken token = default(CancellationToken))
         {
-            if (id != employeeStatistic.Id)
+            if (!this.ModelState.IsValid)
             {
-                return this.NotFound();
+                this.ViewBag.EmployeeId = new SelectList(await this.employeeQueries.GetAllAsync(token), "Id", "Name");
+                return this.View(command);
             }
 
-            if (this.ModelState.IsValid)
-            {
-                this.context.Update(employeeStatistic);
-                await this.context.SaveChangesAsync();
-                return this.RedirectToAction(nameof(this.Index));
-            }
-
-            this.ViewData["EmployeeId"] = new SelectList(this.context.Employees, "Id", "Name", employeeStatistic.EmployeeId);
-            return this.View(employeeStatistic);
+            await this.pipelineService.HandleCommandAsync(command, token);
+            return this.RedirectToAction(nameof(this.Index));
         }
 
         /// <summary>
-        /// GET: Employee/Delete/5
+        /// GET: EmployeeStatistic/Delete/5
         /// </summary>
         /// <param name="id">The id.</param>
+        /// <param name="token">The token.</param>
         /// <returns>The action result.</returns>
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<ViewResult> Delete(int id, CancellationToken token = default(CancellationToken))
         {
-            if (id == null)
-            {
-                return this.NotFound();
-            }
-
-            var employeeStatistic = await this.context.EmployeeStatistics
-                .Include(e => e.Employee)
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (employeeStatistic == null)
-            {
-                return this.NotFound();
-            }
-
-            return this.View(employeeStatistic);
+            return this.View(await this.employeeStatisticQueries.GetAsync(id, token));
         }
 
         /// <summary>
-        /// POST: Employee/Delete/5
+        /// POST: EmployeeStatistic/Delete/5
         /// </summary>
         /// <param name="id">The id.</param>
+        /// <param name="token">The token.</param>
         /// <returns>The action result.</returns>
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<RedirectToActionResult> DeleteConfirmed(int id, CancellationToken token = default(CancellationToken))
         {
-            var employeeStatistic = await this.context.EmployeeStatistics.SingleOrDefaultAsync(m => m.Id == id);
-            this.context.EmployeeStatistics.Remove(employeeStatistic);
-            await this.context.SaveChangesAsync();
+            await this.pipelineService.HandleCommandAsync(new DeleteEmployeeStatisticCommand(id), token);
             return this.RedirectToAction(nameof(this.Index));
-        }
-
-        private bool EmployeeStatisticExists(int id)
-        {
-            return this.context.EmployeeStatistics.Any(e => e.Id == id);
         }
     }
 }

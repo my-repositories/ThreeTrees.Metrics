@@ -32,7 +32,7 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Commands
             this.DrunkedCups = statistic.DrunkedCups;
             this.EmployeeId = statistic.Id;
             this.Employee = statistic.Employee;
-            this.PlayedMCGames = statistic.PlayedMCGames;
+            this.PlayedMCGames = statistic.PlayedMcGames;
             this.Month = statistic.Month;
             this.Year = statistic.Year;
         }

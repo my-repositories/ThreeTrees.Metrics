@@ -1,5 +1,6 @@
-﻿@using ThreeTrees.Metrics.Domain.Employees.Entities;
-@model Employee
+﻿@using ThreeTrees.Metrics.Domain.Employees.Commands
+@using ThreeTrees.Metrics.Domain.Employees.Entities;
+@model CreateEmployeeCommand
 
 @{
     ViewData["Title"] = "Create";
@@ -29,6 +30,7 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
+                @Html.AntiForgeryToken()
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>

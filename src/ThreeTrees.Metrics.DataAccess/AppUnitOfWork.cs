@@ -9,12 +9,11 @@ using ThreeTrees.Metrics.Domain.Employees.Entities;
 using ThreeTrees.Metrics.Domain.Employees.Repositories;
 using ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities;
 using ThreeTrees.Metrics.Domain.EmployeeStatistics.Repositories;
-using ThreeTrees.Tools.EFCore2;
 
 namespace ThreeTrees.Metrics.DataAccess
 {
     /// <inheritdoc cref="IAppUnitOfWork" />
-    public class AppUnitOfWork : EfUnitOfWork<AppDbContext>, IAppUnitOfWork
+    public class AppUnitOfWork : Saritasa.Tools.EFCore.EFUnitOfWork<AppDbContext>, IAppUnitOfWork
     {
         private IEmployeeRepository employeeRepository;
 
@@ -57,11 +56,13 @@ namespace ThreeTrees.Metrics.DataAccess
             }
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets the employees.
         /// </summary>
         public IQueryable<Employee> Employees => this.Context.Employees;
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets the employee statistics.
         /// </summary>

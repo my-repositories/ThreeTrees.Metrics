@@ -1,37 +1,33 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\ThreeTrees.Metrics.DataAccess.xml</DocumentationFile>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DocumentationFile>bin\Debug\netstandard2.0\ThreeTrees.Metrics.DataAccess.xml</DocumentationFile>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="stylecop.json" />
-  </ItemGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <DocumentationFile>bin\Release\netstandard2.0\ThreeTrees.Metrics.DataAccess.xml</DocumentationFile>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <AdditionalFiles Include="stylecop.json" />
-  </ItemGroup>
+    <ItemGroup>
+        <AdditionalFiles Include="..\..\tools\stylecop.json" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.6.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.2" />
-    <PackageReference Include="NLog" Version="4.5.1" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Autofac" Version="4.7.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.2" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.2" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.2" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" />
+        <PackageReference Include="NLog" Version="4.5.2" />
+        <PackageReference Include="Saritasa.Tools.EFCore1" Version="0.4.0" />
+        <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ThreeTrees.Metrics.Domain\ThreeTrees.Metrics.Domain.csproj" />
-    <ProjectReference Include="..\ThreeTrees.Tools.EFCore2\ThreeTrees.Tools.EFCore2.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.EntityFrameworkCore.SqlServer">
-      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.entityframeworkcore.sqlserver\2.0.2\lib\netstandard2.0\Microsoft.EntityFrameworkCore.SqlServer.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
+    <ItemGroup>
+        <ProjectReference Include="..\ThreeTrees.Metrics.Domain\ThreeTrees.Metrics.Domain.csproj" />
+    </ItemGroup>
 </Project>

@@ -3,11 +3,12 @@
 
 using System.Linq;
 
+using Saritasa.Tools.Domain;
+
 using ThreeTrees.Metrics.Domain.Employees.Entities;
 using ThreeTrees.Metrics.Domain.Employees.Repositories;
 using ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities;
 using ThreeTrees.Metrics.Domain.EmployeeStatistics.Repositories;
-using ThreeTrees.Tools.Domain;
 
 namespace ThreeTrees.Metrics.Domain
 {

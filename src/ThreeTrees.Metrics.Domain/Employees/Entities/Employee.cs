@@ -2,7 +2,10 @@
 // Licensed under the BSD license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
+using ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities;
 
 namespace ThreeTrees.Metrics.Domain.Employees.Entities
 {
@@ -62,5 +65,10 @@ namespace ThreeTrees.Metrics.Domain.Employees.Entities
         [Required]
         [MaxLength(255)]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the employee statistic.
+        /// </summary>
+        public ICollection<EmployeeStatistic> EmployeeStatistic { get; set; }
     }
 }

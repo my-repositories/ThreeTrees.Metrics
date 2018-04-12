@@ -1,4 +1,6 @@
-﻿@model ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities.EmployeeStatistic
+﻿@using ThreeTrees.Metrics.Domain.EmployeeStatistics.Commands
+@using ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities;
+@model CreateEmployeeStatisticCommand
 
 @{
     ViewData["Title"] = "Create";
@@ -29,7 +31,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="EmployeeId" class="control-label"></label>
-                <select asp-for="EmployeeId" class ="form-control" asp-items="ViewBag.EmployeeId"></select>
+                <select asp-for="EmployeeId" class="form-control" asp-items="ViewBag.EmployeeId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="PlayedMCGames" class="control-label"></label>
@@ -47,6 +49,7 @@
                 <span asp-validation-for="Year" class="text-danger"></span>
             </div>
             <div class="form-group">
+                @Html.AntiForgeryToken()
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>

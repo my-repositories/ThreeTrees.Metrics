@@ -2,8 +2,11 @@
 // Licensed under the BSD license. See LICENSE file in the project root for full license information.
 
 using System;
-using Microsoft.AspNetCore;
+using System.IO;
+
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -17,9 +20,7 @@ namespace ThreeTrees.Metrics.Web
         /// <summary>
         /// The main.
         /// </summary>
-        /// <param name="args">
-        /// The args.
-        /// </param>
+        /// <param name="args">The args.</param>
         public static void Main(string[] args)
         {
             var host = BuildWebHost(args);
@@ -44,14 +45,32 @@ namespace ThreeTrees.Metrics.Web
         /// <summary>
         /// The build web host.
         /// </summary>
-        /// <param name="args">
-        /// The args.
-        /// </param>
-        /// <returns>
-        /// The <see cref="IWebHost"/>.
-        /// </returns>
+        /// <param name="args">The args.</param>
+        /// <returns>The <see cref="IWebHost"/>.</returns>
         public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+            new WebHostBuilder()
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .ConfigureServices(services => services.AddAutofac())
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config.AddJsonFile("appsettings.json", true, true)
+                        .AddJsonFile(Path.GetFullPath(Path.Combine(@"../../tools/appsettings.json")), true, true);
+
+                    config.AddEnvironmentVariables();
+
+                    if (args != null)
+                    {
+                        config.AddCommandLine(args);
+                    }
+                })
+                .ConfigureLogging((hostingContext, logging) =>
+                {
+                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                    logging.AddConsole();
+                    logging.AddDebug();
+                })
+                .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
     }

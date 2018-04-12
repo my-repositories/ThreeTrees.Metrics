@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq.Expressions;
 
 using ThreeTrees.Metrics.Domain.Employees.Entities;
+using ThreeTrees.Metrics.Shared;
 
 namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities
 {
@@ -41,25 +42,27 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities
         /// <summary>
         /// Gets or sets the Id.
         /// </summary>
-        [Key]
         public int Id { get; set; }
 
         /// <summary>
         /// Gets or sets the BilledHours.
         /// </summary>
         [Required]
+        [Range(0, int.MaxValue)]
         public int BilledHours { get; set; }
 
         /// <summary>
         /// Gets or sets the CompletedTasks.
         /// </summary>
         [Required]
+        [Range(0, int.MaxValue)]
         public int CompletedTasks { get; set; }
 
         /// <summary>
         /// Gets or sets the DrunkedCups.
         /// </summary>
         [Required]
+        [Range(0, int.MaxValue)]
         public int DrunkedCups { get; set; }
 
         /// <summary>
@@ -77,19 +80,21 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities
         /// Gets or sets the PlayedMCGames.
         /// </summary>
         [Required]
-        public int PlayedMCGames { get; set; }
+        [Range(0, int.MaxValue)]
+        public int PlayedMcGames { get; set; }
 
         /// <summary>
         /// Gets or sets the Month.
         /// </summary>
         [Required]
+        [Range(1, 12)]
         public int Month { get; set; }
 
         /// <summary>
         /// Gets or sets the Year.
         /// </summary>
         [Required]
-        [Range(2000, int.MaxValue)]
+        [RangeUntilCurrentYear(2000)]
         public int Year { get; set; }
     }
 }

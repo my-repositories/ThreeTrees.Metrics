@@ -12,7 +12,7 @@ using ThreeTrees.Metrics.Domain.EmployeeStatistics.Repositories;
 namespace ThreeTrees.Metrics.DataAccess.Repositories
 {
     /// <inheritdoc cref="IEmployeeStatisticRepository" />
-    public class EmployeeStatisticRepository : Tools.EFCore2.EfRepository<EmployeeStatistic, AppDbContext>, IEmployeeStatisticRepository
+    public class EmployeeStatisticRepository : Saritasa.Tools.EFCore.EFRepository<EmployeeStatistic, AppDbContext>, IEmployeeStatisticRepository
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EmployeeStatisticRepository"/> class.
@@ -21,12 +21,6 @@ namespace ThreeTrees.Metrics.DataAccess.Repositories
         public EmployeeStatisticRepository(AppDbContext context)
             : base(context)
         {
-        }
-
-        /// <inheritdoc />
-        public EmployeeStatistic Get(int id, IEnumerable<Expression<Func<EmployeeStatistic, object>>> includes = null)
-        {
-            return this.Find(p => p.Id == id, includes?.ToArray()).SingleOrDefault();
         }
     }
 }

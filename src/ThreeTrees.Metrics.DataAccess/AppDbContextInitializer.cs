@@ -53,7 +53,7 @@ namespace ThreeTrees.Metrics.DataAccess
                     CompletedTasks = 12,
                     DrunkedCups = 24,
                     EmployeeId = 1,
-                    PlayedMCGames = 3,
+                    PlayedMcGames = 3,
                     Month = 1,
                     Year = 2010
                 },
@@ -63,7 +63,7 @@ namespace ThreeTrees.Metrics.DataAccess
                     CompletedTasks = 36,
                     DrunkedCups = 42,
                     EmployeeId = 2,
-                    PlayedMCGames = 7,
+                    PlayedMcGames = 7,
                     Month = 4,
                     Year = 2015
                 }
