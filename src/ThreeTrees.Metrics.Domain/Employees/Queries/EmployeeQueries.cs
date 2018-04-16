@@ -32,7 +32,8 @@ namespace ThreeTrees.Metrics.Domain.Employees.Queries
         /// <returns>The employee.</returns>
         public Employee Get(int id)
         {
-            return this.uow.EmployeeRepository.Get(id);
+            return this.uow.EmployeeRepository
+                .Get(id);
         }
 
         /// <summary>
@@ -43,7 +44,8 @@ namespace ThreeTrees.Metrics.Domain.Employees.Queries
         /// <returns>The employee.</returns>
         public async Task<Employee> GetAsync(int id, CancellationToken token = default(CancellationToken))
         {
-            return await this.uow.EmployeeRepository.GetAsync(token, id);
+            return await this.uow.EmployeeRepository
+                .GetAsync(token, id);
         }
 
         /// <summary>
@@ -52,7 +54,8 @@ namespace ThreeTrees.Metrics.Domain.Employees.Queries
         /// <returns>The employees.</returns>
         public IEnumerable<Employee> GetAll()
         {
-            return this.uow.EmployeeRepository.GetAll();
+            return this.uow.EmployeeRepository
+                .GetAll();
         }
 
         /// <summary>
@@ -62,7 +65,8 @@ namespace ThreeTrees.Metrics.Domain.Employees.Queries
         /// <returns>The employees.</returns>
         public async Task<IEnumerable<Employee>> GetAllAsync(CancellationToken token = default(CancellationToken))
         {
-            return await this.uow.EmployeeRepository.GetAllAsync(token);
+            return await this.uow.EmployeeRepository
+                .GetAllAsync(token);
         }
 
         // TODO: Implement it.

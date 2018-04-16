@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 using ThreeTrees.Metrics.Domain.Employees.Entities;
 using ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities;
+using ThreeTrees.Metrics.Shared;
 
 namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Commands
 {
@@ -47,18 +48,21 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Commands
         /// Gets or sets the BilledHours.
         /// </summary>
         [Required]
+        [Range(0, int.MaxValue)]
         public int BilledHours { get; set; }
 
         /// <summary>
         /// Gets or sets the CompletedTasks.
         /// </summary>
         [Required]
+        [Range(0, int.MaxValue)]
         public int CompletedTasks { get; set; }
 
         /// <summary>
         /// Gets or sets the DrunkedCups.
         /// </summary>
         [Required]
+        [Range(0, int.MaxValue)]
         public int DrunkedCups { get; set; }
 
         /// <summary>
@@ -81,13 +85,14 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Commands
         /// Gets or sets the Month.
         /// </summary>
         [Required]
+        [Range(1, 12)]
         public int Month { get; set; }
 
         /// <summary>
         /// Gets or sets the Year.
         /// </summary>
         [Required]
-        [Range(2000, int.MaxValue)]
+        [RangeUntilCurrentYear(2000)]
         public int Year { get; set; }
     }
 }

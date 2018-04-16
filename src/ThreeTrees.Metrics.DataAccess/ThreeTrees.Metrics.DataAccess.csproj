@@ -13,6 +13,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Migrations\20180414064832_Initial.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
         <AdditionalFiles Include="..\..\tools\stylecop.json" />
     </ItemGroup>
 

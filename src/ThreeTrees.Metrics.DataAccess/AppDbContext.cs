@@ -33,11 +33,9 @@ namespace ThreeTrees.Metrics.DataAccess
         /// <inheritdoc/>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<EmployeeStatistic>(e =>
+            modelBuilder.Entity<EmployeeStatistic>(b =>
             {
-                e.HasKey(x => x.Id);
-                e.Property(p => p.Id).ValueGeneratedOnAdd();
-                e.HasKey(x => new { x.Year, x.Month });
+                b.HasIndex(e => new { e.Month, e.Year }).IsUnique();
             })
                 .Entity<EmployeeStatistic>()
                 .HasOne(x => x.Employee)

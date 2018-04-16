@@ -36,7 +36,7 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Queries
         {
             return this.uow
                 .EmployeeStatisticRepository
-                .Get(id);
+                .Get(id, EmployeeStatistic.IncludeAll);
         }
 
         /// <summary>
@@ -47,7 +47,14 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Queries
         /// <returns>The employee.</returns>
         public async Task<EmployeeStatistic> GetAsync(int id, CancellationToken token = default(CancellationToken))
         {
-            // return await this.uow.EmployeeStatisticRepository.GetAsync(token, id);
+            // TODO: WHY THIS DON'T WORK ???!!!!11111111111
+            /*
+             * ArgumentException:
+             * Entity type 'EmployeeStatistic' is defined with a single key property,
+             * but 2 values were passed to the 'DbSet.Find' method.
+             * */
+            /*return await this.uow.EmployeeStatisticRepository
+                .GetAsync(token, id, EmployeeStatistic.IncludeAll);*/
             return await this.uow
                 .EmployeeStatistics
                 .Include(x => x.Employee)
@@ -60,7 +67,8 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Queries
         /// <returns>The employee statistics.</returns>
         public IEnumerable<EmployeeStatistic> GetAll()
         {
-            return this.uow.EmployeeStatisticRepository.GetAll(EmployeeStatistic.DefaultInclude.ToArray());
+            return this.uow.EmployeeStatisticRepository
+                .GetAll(EmployeeStatistic.DefaultInclude.ToArray());
         }
 
         /// <summary>

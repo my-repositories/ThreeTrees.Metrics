@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThreeTrees.Metrics.Services
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThreeTrees.Metrics.Shared", "ThreeTrees.Metrics.Shared\ThreeTrees.Metrics.Shared.csproj", "{FDE093D3-5F78-460A-B1FE-B5A9A227F305}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Startup", "Startup", "{DA5977C0-22C2-41C4-B53D-BF3DAD4BF1D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{D461D216-CE1B-4BD1-BDF5-9804D6CBAA0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +52,14 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C55B5616-794A-4BEF-A36C-698C8BD1394E} = {DA5977C0-22C2-41C4-B53D-BF3DAD4BF1D6}
+		{5AA996E2-8C10-4C4D-B2D1-391BDCBBEA28} = {D461D216-CE1B-4BD1-BDF5-9804D6CBAA0C}
+		{E1D9A101-6363-47EC-8CC5-50C0F742A020} = {D461D216-CE1B-4BD1-BDF5-9804D6CBAA0C}
+		{B84CD4A2-C48C-49AC-8048-29AB9978460C} = {D461D216-CE1B-4BD1-BDF5-9804D6CBAA0C}
+		{26634A37-607C-4FF7-BF34-6CC3332ED832} = {D461D216-CE1B-4BD1-BDF5-9804D6CBAA0C}
+		{FDE093D3-5F78-460A-B1FE-B5A9A227F305} = {D461D216-CE1B-4BD1-BDF5-9804D6CBAA0C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BB0B8674-11C3-4DD0-B314-D6FE65B05FC5}

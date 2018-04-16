@@ -29,7 +29,6 @@ CREATE TABLE [EmployeeStatistics] (
     [PlayedMcGames] int NOT NULL,
     [Year] int NOT NULL,
     CONSTRAINT [PK_EmployeeStatistics] PRIMARY KEY ([Id]),
-    CONSTRAINT [AK_EmployeeStatistics_Year_Month] UNIQUE ([Year], [Month]),
     CONSTRAINT [FK_EmployeeStatistics_Employees_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employees] ([Id]) ON DELETE CASCADE
 );
 
@@ -39,8 +38,12 @@ CREATE INDEX [IX_EmployeeStatistics_EmployeeId] ON [EmployeeStatistics] ([Employ
 
 GO
 
+CREATE UNIQUE INDEX [IX_EmployeeStatistics_Year_Month] ON [EmployeeStatistics] ([Year], [Month]);
+
+GO
+
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20180414064832_Initial', N'2.0.2-rtm-10011');
+VALUES (N'20180416023402_Initial', N'2.0.2-rtm-10011');
 
 GO
 
