@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities.EmployeeStatistic>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Total Statistic</h2>
+
+<p>
+    <a asp-action="Index">Back</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BilledHours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompletedTasks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DrunkedCups)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlayedMcGames)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BilledHours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompletedTasks)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DrunkedCups)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlayedMcGames)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

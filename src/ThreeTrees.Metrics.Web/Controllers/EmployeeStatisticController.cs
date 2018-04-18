@@ -145,5 +145,17 @@ namespace ThreeTrees.Metrics.Web.Controllers
             await this.pipelineService.HandleCommandAsync(new DeleteEmployeeStatisticCommand(id), token);
             return this.RedirectToAction(nameof(this.Index));
         }
+
+        /// <summary>
+        /// GET: EmployeeStatistic/Total
+        /// </summary>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>The view result.</returns>
+        public async Task<ActionResult> Total(CancellationToken token = default(CancellationToken))
+        {
+            var stata = await this.employeeStatisticQueries.GetTotalAsync(token);
+
+            return this.View(stata);
+        }
     }
 }

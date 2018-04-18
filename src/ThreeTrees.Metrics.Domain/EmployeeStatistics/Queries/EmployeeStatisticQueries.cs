@@ -47,14 +47,6 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Queries
         /// <returns>The employee.</returns>
         public async Task<EmployeeStatistic> GetAsync(int id, CancellationToken token = default(CancellationToken))
         {
-            // TODO: WHY THIS DON'T WORK ???!!!!11111111111
-            /*
-             * ArgumentException:
-             * Entity type 'EmployeeStatistic' is defined with a single key property,
-             * but 2 values were passed to the 'DbSet.Find' method.
-             * */
-            /*return await this.uow.EmployeeStatisticRepository
-                .GetAsync(token, id, EmployeeStatistic.IncludeAll);*/
             return await this.uow
                 .EmployeeStatistics
                 .Include(x => x.Employee)
@@ -81,6 +73,44 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Queries
             return await this.uow
                 .EmployeeStatisticRepository
                 .GetAllAsync(token, EmployeeStatistic.DefaultInclude.ToArray());
+        }
+
+        /// <summary>
+        /// Get all employee statistics.
+        /// </summary>
+        /// <returns>The employee statistics.</returns>
+        public IEnumerable<EmployeeStatistic> GetTotal()
+        {
+            return this.uow.EmployeeStatisticRepository
+                .GetAll()
+                .GroupBy(x => x.Year)
+                .Select(x => new EmployeeStatistic
+                {
+                    Year = x.First().Year,
+                    BilledHours = x.Sum(e => e.BilledHours),
+                    CompletedTasks = x.Sum(e => e.CompletedTasks),
+                    DrunkedCups = x.Sum(e => e.DrunkedCups),
+                    PlayedMcGames = x.Sum(e => e.PlayedMcGames)
+                });
+        }
+
+        /// <summary>
+        /// Get all employee statistics.
+        /// </summary>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>The employee statistics.</returns>
+        public async Task<IEnumerable<EmployeeStatistic>> GetTotalAsync(CancellationToken token = default(CancellationToken))
+        {
+            var result = await this.uow.EmployeeStatisticRepository.GetAllAsync();
+            return result.GroupBy(x => x.Year)
+                .Select(x => new EmployeeStatistic
+                {
+                    Year = x.First().Year,
+                    BilledHours = x.Sum(e => e.BilledHours),
+                    CompletedTasks = x.Sum(e => e.CompletedTasks),
+                    DrunkedCups = x.Sum(e => e.DrunkedCups),
+                    PlayedMcGames = x.Sum(e => e.PlayedMcGames)
+                });
         }
 
         // TODO: Implement it.
