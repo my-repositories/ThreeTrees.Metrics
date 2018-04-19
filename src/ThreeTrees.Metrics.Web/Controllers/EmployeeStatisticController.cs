@@ -153,9 +153,19 @@ namespace ThreeTrees.Metrics.Web.Controllers
         /// <returns>The view result.</returns>
         public async Task<ActionResult> Total(CancellationToken token = default(CancellationToken))
         {
-            var stata = await this.employeeStatisticQueries.GetTotalAsync(token);
+            return this.View(await this.employeeStatisticQueries.GetTotalAsync(token));
+        }
 
-            return this.View(stata);
+        /// <summary>
+        /// GET: EmployeeStatistic/ByYear
+        /// </summary>
+        /// <param name="id">The year.</param>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>The view result.</returns>
+        public async Task<ActionResult> ByYear(int id, CancellationToken token = default(CancellationToken))
+        {
+            var data = await this.employeeStatisticQueries.GetByYearAsync(id, token);
+            return this.View(data);
         }
     }
 }

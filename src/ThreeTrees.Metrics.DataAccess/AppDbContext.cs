@@ -35,7 +35,7 @@ namespace ThreeTrees.Metrics.DataAccess
         {
             modelBuilder.Entity<EmployeeStatistic>(b =>
             {
-                b.HasIndex(e => new { e.Month, e.Year }).IsUnique();
+                b.HasIndex(e => new { e.Month, e.Year, e.EmployeeId }).IsUnique();
             })
                 .Entity<EmployeeStatistic>()
                 .HasOne(x => x.Employee)

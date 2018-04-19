@@ -76,7 +76,7 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Queries
         }
 
         /// <summary>
-        /// Get all employee statistics.
+        /// Get bad and worst employees by year.
         /// </summary>
         /// <returns>The employee statistics.</returns>
         public IEnumerable<EmployeeStatistic> GetTotal()
@@ -92,6 +92,81 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Queries
                     DrunkedCups = x.Sum(e => e.DrunkedCups),
                     PlayedMcGames = x.Sum(e => e.PlayedMcGames)
                 });
+        }
+
+        /// <summary>
+        /// Get statistic by year employee statistics.
+        /// </summary>
+        /// <param name="year">The year.</param>
+        /// <param name="token">The cancellation token.</param>
+        /// <returns>The employee statistics.</returns>
+        public async Task<IEnumerable<EmployeeStatisticByYear>> GetByYearAsync(int year, CancellationToken token = default(CancellationToken))
+        {
+            var billedHours = (from s in this.uow.EmployeeStatistics.Include(x => x.Employee).Where(x => x.Year == year)
+                               select new EmployeeStatisticByYear()
+                               {
+                                   StatisticName = "Billed Hours",
+                                   BestEmployee = this.uow.EmployeeStatistics
+                                     .Include(x => x.Employee)
+                                     .OrderByDescending(x => x.BilledHours)
+                                     .FirstOrDefault()
+                                     .Employee,
+                                   WorstEmployee = this.uow.EmployeeStatistics
+                                     .Include(x => x.Employee)
+                                     .OrderBy(x => x.BilledHours)
+                                     .FirstOrDefault()
+                                     .Employee
+                               }).Take(1);
+            var completedTasks = (from s in this.uow.EmployeeStatistics.Include(x => x.Employee).Where(x => x.Year == year)
+                                 select new EmployeeStatisticByYear()
+                                 {
+                                     StatisticName = "Completed Tasks",
+                                     BestEmployee = this.uow.EmployeeStatistics
+                                      .Include(x => x.Employee)
+                                      .OrderByDescending(x => x.CompletedTasks)
+                                      .FirstOrDefault()
+                                      .Employee,
+                                     WorstEmployee = this.uow.EmployeeStatistics
+                                     .Include(x => x.Employee)
+                                     .OrderBy(x => x.CompletedTasks)
+                                     .FirstOrDefault()
+                                     .Employee
+                                 }).Take(1);
+            var drunkedCups = (from s in this.uow.EmployeeStatistics.Include(x => x.Employee).Where(x => x.Year == year)
+                                 select new EmployeeStatisticByYear()
+                                 {
+                                     StatisticName = "Drunked cups",
+                                     BestEmployee = this.uow.EmployeeStatistics
+                                      .Include(x => x.Employee)
+                                      .OrderByDescending(x => x.DrunkedCups)
+                                      .FirstOrDefault()
+                                      .Employee,
+                                     WorstEmployee = this.uow.EmployeeStatistics
+                                     .Include(x => x.Employee)
+                                     .OrderBy(x => x.DrunkedCups)
+                                     .FirstOrDefault()
+                                     .Employee
+                                 }).Take(1);
+            var playedMcGames = (from s in this.uow.EmployeeStatistics.Include(x => x.Employee).Where(x => x.Year == year)
+                              select new EmployeeStatisticByYear()
+                              {
+                                  StatisticName = "Played Mc Games",
+                                  BestEmployee = this.uow.EmployeeStatistics
+                                   .Include(x => x.Employee)
+                                   .OrderByDescending(x => x.PlayedMcGames)
+                                   .FirstOrDefault()
+                                   .Employee,
+                                  WorstEmployee = this.uow.EmployeeStatistics
+                                     .Include(x => x.Employee)
+                                     .OrderBy(x => x.PlayedMcGames)
+                                     .FirstOrDefault()
+                                     .Employee
+                              }).Take(1);
+
+            return await billedHours.Union(completedTasks)
+                .Union(drunkedCups)
+                .Union(playedMcGames)
+                .ToListAsync(token);
         }
 
         /// <summary>

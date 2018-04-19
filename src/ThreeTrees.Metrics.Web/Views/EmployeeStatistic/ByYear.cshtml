@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ThreeTrees.Metrics.Domain.EmployeeStatistics.Entities.EmployeeStatisticByYear>
+
+@{
+    ViewData["Title"] = "ByYear";
+}
+
+<h2>Statistic by year</h2>
+
+<p>
+    <a asp-action="Index">Back</a>
+</p>
+
+<p>
+    <select>
+        <option value="2018">2018</option>
+    </select>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>&nbsp;</th>
+            <th>
+                Best
+            </th>
+            <th>
+                Worst
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+        <tr>
+            <td>
+                <b>@item.StatisticName</b>
+            </td>
+            <td>
+                @item.BestEmployee.Name
+            </td>
+            <td>
+                @item.WorstEmployee.Name
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

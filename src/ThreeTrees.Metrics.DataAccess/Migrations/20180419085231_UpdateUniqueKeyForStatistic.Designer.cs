@@ -4,19 +4,22 @@
 // Licensed under the BSD license. See LICENSE file in the project root for full license information.
 
 using System;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ThreeTrees.Metrics.DataAccess.Migrations
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// The UpdateUniqueKeyForStatistic.
+    /// </summary>
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180419085231_UpdateUniqueKeyForStatistic")]
+    partial class UpdateUniqueKeyForStatistic
     {
         /// <inheritdoc/>
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
