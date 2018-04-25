@@ -151,7 +151,7 @@ namespace ThreeTrees.Metrics.Web.Controllers
         /// </summary>
         /// <param name="token">The cancellation token.</param>
         /// <returns>The view result.</returns>
-        public async Task<ActionResult> Total(CancellationToken token = default(CancellationToken))
+        public async Task<ViewResult> Total(CancellationToken token = default(CancellationToken))
         {
             return this.View(await this.employeeStatisticQueries.GetTotalAsync(token));
         }
@@ -162,10 +162,16 @@ namespace ThreeTrees.Metrics.Web.Controllers
         /// <param name="id">The year.</param>
         /// <param name="token">The cancellation token.</param>
         /// <returns>The view result.</returns>
-        public async Task<ActionResult> ByYear(int id, CancellationToken token = default(CancellationToken))
+        // todo [Route("{year:int}")]
+        public async Task<ViewResult> ByYear(int id/*it's year.*/, CancellationToken token = default(CancellationToken))
         {
-            var data = await this.employeeStatisticQueries.GetByYearAsync(id, token);
-            return this.View(data);
+            return this.View(new[]
+            {
+                await this.employeeStatisticQueries.GetByYearAsync(id, "BilledHours", stat => stat.BilledHours),
+                await this.employeeStatisticQueries.GetByYearAsync(id, "CompletedTasks", stat => stat.CompletedTasks),
+                await this.employeeStatisticQueries.GetByYearAsync(id, "DrunkedCups", stat => stat.DrunkedCups),
+                await this.employeeStatisticQueries.GetByYearAsync(id, "PlayedMcGames", stat => stat.PlayedMcGames),
+            });
         }
     }
 }

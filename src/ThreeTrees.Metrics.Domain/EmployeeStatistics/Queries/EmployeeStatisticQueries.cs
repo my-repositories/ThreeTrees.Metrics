@@ -1,8 +1,10 @@
 ﻿// Copyright (c) ThreeTrees. All rights reserved.
 // Licensed under the BSD license. See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -98,75 +100,32 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Queries
         /// Get statistic by year employee statistics.
         /// </summary>
         /// <param name="year">The year.</param>
+        /// <param name="statisticName">The statistic name.</param>
+        /// <param name="expression">The expression.</param>
         /// <param name="token">The cancellation token.</param>
         /// <returns>The employee statistics.</returns>
-        public async Task<IEnumerable<EmployeeStatisticByYear>> GetByYearAsync(int year, CancellationToken token = default(CancellationToken))
+        public async Task<EmployeeStatisticByYear> GetByYearAsync(
+            int year,
+            string statisticName,
+            Expression<Func<EmployeeStatistic, object>> expression,
+            CancellationToken token = default(CancellationToken))
         {
-            var billedHours = (from s in this.uow.EmployeeStatistics.Include(x => x.Employee).Where(x => x.Year == year)
-                               select new EmployeeStatisticByYear()
-                               {
-                                   StatisticName = "Billed Hours",
-                                   BestEmployee = this.uow.EmployeeStatistics
-                                     .Include(x => x.Employee)
-                                     .OrderByDescending(x => x.BilledHours)
-                                     .FirstOrDefault()
-                                     .Employee,
-                                   WorstEmployee = this.uow.EmployeeStatistics
-                                     .Include(x => x.Employee)
-                                     .OrderBy(x => x.BilledHours)
-                                     .FirstOrDefault()
-                                     .Employee
-                               }).Take(1);
-            var completedTasks = (from s in this.uow.EmployeeStatistics.Include(x => x.Employee).Where(x => x.Year == year)
-                                 select new EmployeeStatisticByYear()
-                                 {
-                                     StatisticName = "Completed Tasks",
-                                     BestEmployee = this.uow.EmployeeStatistics
-                                      .Include(x => x.Employee)
-                                      .OrderByDescending(x => x.CompletedTasks)
-                                      .FirstOrDefault()
-                                      .Employee,
-                                     WorstEmployee = this.uow.EmployeeStatistics
-                                     .Include(x => x.Employee)
-                                     .OrderBy(x => x.CompletedTasks)
-                                     .FirstOrDefault()
-                                     .Employee
-                                 }).Take(1);
-            var drunkedCups = (from s in this.uow.EmployeeStatistics.Include(x => x.Employee).Where(x => x.Year == year)
-                                 select new EmployeeStatisticByYear()
-                                 {
-                                     StatisticName = "Drunked cups",
-                                     BestEmployee = this.uow.EmployeeStatistics
-                                      .Include(x => x.Employee)
-                                      .OrderByDescending(x => x.DrunkedCups)
-                                      .FirstOrDefault()
-                                      .Employee,
-                                     WorstEmployee = this.uow.EmployeeStatistics
-                                     .Include(x => x.Employee)
-                                     .OrderBy(x => x.DrunkedCups)
-                                     .FirstOrDefault()
-                                     .Employee
-                                 }).Take(1);
-            var playedMcGames = (from s in this.uow.EmployeeStatistics.Include(x => x.Employee).Where(x => x.Year == year)
-                              select new EmployeeStatisticByYear()
-                              {
-                                  StatisticName = "Played Mc Games",
-                                  BestEmployee = this.uow.EmployeeStatistics
-                                   .Include(x => x.Employee)
-                                   .OrderByDescending(x => x.PlayedMcGames)
-                                   .FirstOrDefault()
-                                   .Employee,
-                                  WorstEmployee = this.uow.EmployeeStatistics
-                                     .Include(x => x.Employee)
-                                     .OrderBy(x => x.PlayedMcGames)
-                                     .FirstOrDefault()
-                                     .Employee
-                              }).Take(1);
-
-            return await billedHours.Union(completedTasks)
-                .Union(drunkedCups)
-                .Union(playedMcGames)
-                .ToListAsync(token);
+            return await (from s in this.uow.EmployeeStatistics.Include(x => x.Employee).Where(x => x.Year == year)
+                          select new EmployeeStatisticByYear()
+                          {
+                              StatisticName = statisticName,
+                              BestEmployee = this.uow.EmployeeStatistics
+                                .Include(x => x.Employee)
+                                .OrderByDescending(expression)
+                                .FirstOrDefault()
+                                .Employee,
+                              WorstEmployee = this.uow.EmployeeStatistics
+                                .Include(x => x.Employee)
+                                .OrderBy(expression)
+                                .FirstOrDefault()
+                                .Employee
+                          })
+                            .FirstAsync();
         }
 
         /// <summary>
