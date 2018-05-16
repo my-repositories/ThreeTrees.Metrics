@@ -10,11 +10,14 @@
     <a asp-action="Index">Back</a>
 </p>
 
-<p>
-    <select>
-        <option value="2018">2018</option>
-    </select>
-</p>
+@using (@Html.BeginForm("EmployeeStatistic", "ByYear"))
+{
+<div class="form-group">
+    <label for="year">Year</label>
+    @Html.DropDownList("year", ViewBag.years as SelectList,
+                     "Select year", new { @id = "year", @class = "form-control", @onchange = "location = this.value;" })
+</div>
+}
 
 <table class="table">
     <thead>
@@ -29,18 +32,19 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model) {
-        <tr>
-            <td>
-                <b>@item.StatisticName</b>
-            </td>
-            <td>
-                @item.BestEmployee.Name
-            </td>
-            <td>
-                @item.WorstEmployee.Name
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <b>@item.StatisticName</b>
+                </td>
+                <td>
+                    @item.BestEmployee.Name
+                </td>
+                <td>
+                    @item.WorstEmployee.Name
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

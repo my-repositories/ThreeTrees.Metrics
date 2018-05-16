@@ -2,6 +2,7 @@
 // Licensed under the BSD license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -159,18 +160,22 @@ namespace ThreeTrees.Metrics.Web.Controllers
         /// <summary>
         /// GET: EmployeeStatistic/ByYear
         /// </summary>
-        /// <param name="id">The year.</param>
+        /// <param name="year">The year.</param>
         /// <param name="token">The cancellation token.</param>
         /// <returns>The view result.</returns>
-        // todo [Route("{year:int}")]
-        public async Task<ViewResult> ByYear(int id/*it's year.*/, CancellationToken token = default(CancellationToken))
+        [Route("~/EmployeeStatistic/ByYear/{year:int}")]
+        public async Task<ViewResult> ByYear(int year, CancellationToken token = default(CancellationToken))
         {
+            var years = Enumerable.Range(2000, System.DateTime.Now.Year - 1999);
+            var options = years.Select(value => new { Value = value, Selected = value == year });
+            this.ViewBag.years = new SelectList(options, "Value", "Value");
+
             return this.View(new[]
             {
-                await this.employeeStatisticQueries.GetByYearAsync(id, "BilledHours", stat => stat.BilledHours),
-                await this.employeeStatisticQueries.GetByYearAsync(id, "CompletedTasks", stat => stat.CompletedTasks),
-                await this.employeeStatisticQueries.GetByYearAsync(id, "DrunkedCups", stat => stat.DrunkedCups),
-                await this.employeeStatisticQueries.GetByYearAsync(id, "PlayedMcGames", stat => stat.PlayedMcGames),
+                await this.employeeStatisticQueries.GetByYearAsync(year, "BilledHours", stat => stat.BilledHours),
+                await this.employeeStatisticQueries.GetByYearAsync(year, "CompletedTasks", stat => stat.CompletedTasks),
+                await this.employeeStatisticQueries.GetByYearAsync(year, "DrunkedCups", stat => stat.DrunkedCups),
+                await this.employeeStatisticQueries.GetByYearAsync(year, "PlayedMcGames", stat => stat.PlayedMcGames),
             });
         }
     }
