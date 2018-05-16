@@ -13,7 +13,7 @@
 @using (@Html.BeginForm("EmployeeStatistic", "ByYear"))
 {
 <div class="form-group">
-    <label for="year">Year</label>
+    <label for="year">Select year</label>
     @Html.DropDownList("year", ViewBag.years as SelectList,
                      "Select year", new { @id = "year", @class = "form-control", @onchange = "location = this.value;" })
 </div>
@@ -39,10 +39,10 @@
                     <b>@item.StatisticName</b>
                 </td>
                 <td>
-                    @item.BestEmployee.Name
+                    @(@item.BestEmployee?.Name ?? "N/A")
                 </td>
                 <td>
-                    @item.WorstEmployee.Name
+                    @(@item.WorstEmployee?.Name ?? "N/A")
                 </td>
             </tr>
         }

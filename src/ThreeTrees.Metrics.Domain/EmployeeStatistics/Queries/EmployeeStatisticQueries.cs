@@ -111,8 +111,18 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Queries
             CancellationToken token = default(CancellationToken))
         {
             var stats = this.uow.EmployeeStatistics
-                .Include(x => x.Employee)
-                .Where(x => x.Year == year);
+                .Where(x => x.Year == year)
+                .Include(x => x.Employee);
+
+            if (!stats.Any())
+            {
+                return new EmployeeStatisticByYear()
+                {
+                    StatisticName = statisticName,
+                    BestEmployee = null,
+                    WorstEmployee = null
+                };
+            }
 
             return await (from s in stats
                           select new EmployeeStatisticByYear()

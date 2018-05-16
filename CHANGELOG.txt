@@ -1,4 +1,6 @@
-1.2.4 [2018-05-16]
+1.2.6 [2018-05-16]
+[+] Add an options to DropDownList to choose an year for statistic.
+[*] Fix 'InvalidOperationException: Source sequence doesn't contain any elements.'.
 [*] Fix wrong statistics by year.
 
 1.2.3 [2018-04-19]
