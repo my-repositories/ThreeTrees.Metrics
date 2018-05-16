@@ -110,17 +110,19 @@ namespace ThreeTrees.Metrics.Domain.EmployeeStatistics.Queries
             Expression<Func<EmployeeStatistic, object>> expression,
             CancellationToken token = default(CancellationToken))
         {
-            return await (from s in this.uow.EmployeeStatistics.Include(x => x.Employee).Where(x => x.Year == year)
+            var stats = this.uow.EmployeeStatistics
+                .Include(x => x.Employee)
+                .Where(x => x.Year == year);
+
+            return await (from s in stats
                           select new EmployeeStatisticByYear()
                           {
                               StatisticName = statisticName,
-                              BestEmployee = this.uow.EmployeeStatistics
-                                .Include(x => x.Employee)
+                              BestEmployee = stats
                                 .OrderByDescending(expression)
                                 .FirstOrDefault()
                                 .Employee,
-                              WorstEmployee = this.uow.EmployeeStatistics
-                                .Include(x => x.Employee)
+                              WorstEmployee = stats
                                 .OrderBy(expression)
                                 .FirstOrDefault()
                                 .Employee
