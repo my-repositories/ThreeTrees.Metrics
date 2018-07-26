@@ -84,7 +84,16 @@ namespace ThreeTrees.Metrics.Web.Controllers
                 return this.View(command);
             }
 
-            await this.pipelineService.HandleCommandAsync(command, token);
+            try
+            {
+                await this.pipelineService.HandleCommandAsync(command, token);
+            }
+            catch (MessageProcessingException)
+            {
+                this.ModelState.AddModelError(string.Empty, "Statistic already exists for this user and selected date.");
+                return this.View(command);
+            }
+
             return this.RedirectToAction(nameof(this.Index));
         }
 
