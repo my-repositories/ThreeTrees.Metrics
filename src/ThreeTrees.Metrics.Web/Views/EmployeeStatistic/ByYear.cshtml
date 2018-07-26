@@ -6,17 +6,18 @@
 
 <h2>Statistic by year</h2>
 
-<p>
-    <a asp-action="Index">Back</a>
-</p>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<hr />
 
 @using (@Html.BeginForm("EmployeeStatistic", "ByYear"))
 {
-<div class="form-group">
-    <label for="year">Select year</label>
-    @Html.DropDownList("year", ViewBag.years as SelectList,
-                     "Select year", new { @id = "year", @class = "form-control", @onchange = "location = this.value;" })
-</div>
+    <div class="form-group">
+        <label for="year">Select year</label>
+        @Html.DropDownList("year", ViewBag.years as SelectList,
+                         "Select year", new { @id = "year", @class = "form-control", @onchange = "location = this.value;" })
+    </div>
 }
 
 <table class="table">
