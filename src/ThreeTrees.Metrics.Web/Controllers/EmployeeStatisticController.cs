@@ -78,9 +78,10 @@ namespace ThreeTrees.Metrics.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CreateEmployeeStatisticCommand command, CancellationToken token = default(CancellationToken))
         {
+            this.ViewBag.EmployeeId = new SelectList(await this.employeeQueries.GetAllAsync(token), "Id", "Name");
+
             if (!this.ModelState.IsValid)
             {
-                this.ViewBag.EmployeeId = new SelectList(await this.employeeQueries.GetAllAsync(token), "Id", "Name");
                 return this.View(command);
             }
 
@@ -120,9 +121,10 @@ namespace ThreeTrees.Metrics.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, UpdateEmployeeStatisticCommand command, CancellationToken token = default(CancellationToken))
         {
+            this.ViewBag.EmployeeId = new SelectList(await this.employeeQueries.GetAllAsync(token), "Id", "Name");
+
             if (!this.ModelState.IsValid)
             {
-                this.ViewBag.EmployeeId = new SelectList(await this.employeeQueries.GetAllAsync(token), "Id", "Name");
                 return this.View(command);
             }
 
