@@ -1,8 +1,9 @@
-1.2.10 [2018-07-26]
+1.2.11 [2018-07-26]
 [*] Fix 'MessageProcessingException' when user trying to insert one more year-month record for concrete Employee
 [*] Move link 'Back to list' to top in EmployeeStatistic pages
 [*] Sort statistic records by year in EmployeeStatistic/ByYear page
 [*] Rename label 'EmployeeId' to 'Employee' for EmployeeStatistic pages
+[*] Fix error when a user tries update statistic to already exists year-month record
 
 1.2.6 [2018-05-16]
 [+] Add an options to DropDownList to choose an year for statistic.
