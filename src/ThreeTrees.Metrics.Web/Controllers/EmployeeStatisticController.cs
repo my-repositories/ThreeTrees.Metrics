@@ -163,7 +163,8 @@ namespace ThreeTrees.Metrics.Web.Controllers
         /// <returns>The view result.</returns>
         public async Task<ViewResult> Total(CancellationToken token = default(CancellationToken))
         {
-            return this.View(await this.employeeStatisticQueries.GetTotalAsync(token));
+            var result = await this.employeeStatisticQueries.GetTotalAsync(token);
+            return this.View(result.OrderBy(x => x.Year));
         }
 
         /// <summary>
@@ -175,7 +176,7 @@ namespace ThreeTrees.Metrics.Web.Controllers
         [Route("~/EmployeeStatistic/ByYear/{year:int}")]
         public async Task<ViewResult> ByYear(int year, CancellationToken token = default(CancellationToken))
         {
-            var years = Enumerable.Range(2000, System.DateTime.Now.Year - 1999);
+            var years = Enumerable.Range(2000, DateTime.Now.Year - 1999);
             var options = years.Select(value => new { Value = value, Selected = value == year });
             this.ViewBag.years = new SelectList(options, "Value", "Value");
 
