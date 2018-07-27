@@ -4,6 +4,10 @@
 ---
 ---
 
+### Instructions for developers who like the docker
+
+* Follow to INSTALL.md
+
 ### Instructions for Windows
 
 * Install .NET Core

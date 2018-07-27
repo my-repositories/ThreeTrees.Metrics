@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+    crmdb:
+        image: crmdb
+        environment:
+            SA_PASSWORD: "1111111aA"
+            ACCEPT_EULA: "Y"
+        hostname: crmdb
+        container_name: crmdb
+        labels:
+            - SERVICE_NAME=crmdb
+
+    crmweb:
+        links:
+            - crmdb
+        depends_on:
+            - crmdb
+        image: crmweb
+        hostname: crmweb
+        expose:
+            - 5000
+        ports:
+            - 5000:5000
+        container_name: crmweb
+        environment:
+            - DB_HOST=crmdb
+            - DB_USER_NAME=sa
+            - DB_USER_PASSWORD=1111111aA
+            - DB_NAME=crmdb
+            - VIRTUAL_HOST=crmweb
+        labels:
+            - SERVICE_NAME=crmweb
+        command: /bin/sh -c "envsubst < appsettings.json > temp.json && mv -f temp.json appsettings.json && dotnet ThreeTrees.Metrics.Web.dll" 
+# sed -i "s|%$ENV_KEY1%|$ENV_VALUE1|g;s|%$ENV_KEY2%|$ENV_VALUE2|g" appsettings.json

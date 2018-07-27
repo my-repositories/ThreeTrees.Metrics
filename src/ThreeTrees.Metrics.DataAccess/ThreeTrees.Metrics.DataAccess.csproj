@@ -8,10 +8,6 @@
         <DocumentationFile>bin\Debug\netstandard2.0\ThreeTrees.Metrics.DataAccess.xml</DocumentationFile>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-        <DocumentationFile>bin\Release\netstandard2.0\ThreeTrees.Metrics.DataAccess.xml</DocumentationFile>
-    </PropertyGroup>
-
     <ItemGroup>
       <Compile Remove="Migrations\20180414064832_Initial.cs" />
     </ItemGroup>

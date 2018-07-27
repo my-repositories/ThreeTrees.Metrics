@@ -8,10 +8,6 @@
         <DocumentationFile>bin\Debug\netstandard2.0\ThreeTrees.Metrics.Services.xml</DocumentationFile>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-        <DocumentationFile>bin\Release\netstandard2.0\ThreeTrees.Metrics.Services.xml</DocumentationFile>
-    </PropertyGroup>
-
     <ItemGroup>
         <AdditionalFiles Include="..\..\tools\stylecop.json" />
     </ItemGroup>
